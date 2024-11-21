@@ -1,0 +1,73 @@
+#:kivy 2.3.0
+<Chat>:
+    # I don't really understand why you need cols and rows here rn
+    cols: 2
+    rows: 4
+
+    # Background colour
+    canvas.before:
+        Color:
+            rgba: 255,255,255,0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    RelativeLayout:
+        # Button for previous page
+        Button:
+            text: 'Previous'
+            size_hint: 0.2, 0.2
+            pos_hint: {'x': 0, 'y': 0}
+            on_press: print("YEP")
+
+        # Button for next page
+        Button:
+            text: 'Next'
+            size_hint: 0.2, 0.2
+            pos_hint: {'right': 1, 'y': 0}
+            on_press: print("NOP")
+        
+        # Question text
+        Label:
+            text: 'This is a question'
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+            font_size: 25
+
+        # Status text
+        Label:
+            text: 'Status: Good'
+            color: 0,0,0,1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+            font_size: 20
+        
+        # Radio buttons
+        GridLayout:
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+
+            cols: 2
+            rows: 2
+            size_hint: 0.4, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+
+            Label:
+                text: 'This is one answer'
+                color: 0,0,0,1
+            CheckBox:
+                group: 'answer'
+                active: True
+                allow_no_selection: False
+            Label:
+                text: 'This is another answer'
+                color: 0,0,0,1
+            CheckBox:
+                group: 'answer'
+                active: False
+                allow_no_selection: False
+
+            
