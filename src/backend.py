@@ -10,7 +10,8 @@ class DataProvider():
             "next_button": "Next", 
             "radio_buttons": True, 
             "radio_text_1": "This is one answer",
-            "radio_text_2": "This is another answer"
+            "radio_text_2": "This is another answer",
+            "next_page": "first_page"
         }
     
     def update_data(self, information: dict) -> dict:

@@ -6,6 +6,7 @@ from kivy.properties import StringProperty, NumericProperty
 from backend import DataProvider
 from kivy.logger import Logger, LOG_LEVELS
 from kivy.graphics import *
+from typing import Any
 
 Logger.setLevel(LOG_LEVELS["debug"])
 
@@ -33,7 +34,11 @@ class SecondPage(Screen):
 
 
 class Test(Screen):
-    pass
+    def get_selected_option(self, page: Any) -> Any:
+        for child in page.ids.radio_group.children:
+            if hasattr(child, 'active') and child.active:
+                return child.value
+        return None
 
 
 class KnowledgeApp(App):
@@ -42,10 +47,18 @@ class KnowledgeApp(App):
         self._info = None
         return Test()
 
-    def switch_to_next_page(self, page_name):
-        self._info = self._provider.update_data(self._info)
+    def switch_to_next_page(self):
+        # Get info for next window
+        self._info = self._provider.get_window()
 
-        page = self.root.ids.screen_manager.get_screen(page_name)
+        # Get page data for next page
+        page = self.root.ids.screen_manager.get_screen(self._info["next_page"])
+        
+        # Get input from radio buttons
+        selected_option = self.root.get_selected_option(page)
+        print(selected_option)
+
+        # Update page
         page.title = self._info["title"]
         page.status = self._info["status"]
         page.previous_button = self._info["previous_button"]
@@ -53,9 +66,13 @@ class KnowledgeApp(App):
         page.radio_text_1 = self._info["radio_text_1"]
         page.radio_text_2 = self._info["radio_text_2"]
 
+        # Update provider class
+        self._provider.update_data(self._info)
+
+        # Switch to next page
         screen_manager = self.root.ids.screen_manager
-        screen_manager.current = page_name
-        
+        screen_manager.current = self._info["next_page"]
+
 
 if __name__ == "__main__":
     KnowledgeApp().run()

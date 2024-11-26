@@ -33,7 +33,7 @@
         Button:
             text: 'start'
             size_hint: 0.5, 0.5
-            on_press: app.switch_to_next_page(page_name="first_page")
+            on_press: app.switch_to_next_page()
 
 
 
@@ -59,7 +59,7 @@
             text: root.next_button
             size_hint: 0.2, 0.2
             pos_hint: {'right': 1, 'y': 0}
-            on_press: app.switch_to_next_page('second_page')
+            on_press: app.switch_to_next_page()
 
         # Question text
         Label:
@@ -77,6 +77,7 @@
 
         # Radio buttons
         GridLayout:
+            id: radio_group
             canvas:
                 Color:
                     rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
@@ -93,16 +94,20 @@
                 text: root.radio_text_1
                 color: 0,0,0,1
             CheckBox:
+                id: radio_1
                 group: 'answer_1'
                 active: True
                 allow_no_selection: False
+                value: 'option_2'
             Label:
                 text: root.radio_text_2
                 color: 0,0,0,1
             CheckBox:
+                id: radio_2
                 group: 'answer_1'
                 active: False
                 allow_no_selection: False
+                value: 'option_1'
 
 
 ###############
@@ -126,7 +131,7 @@
             text: root.next_button
             size_hint: 0.2, 0.2
             pos_hint: {'right': 1, 'y': 0}
-            on_press: app.switch_to_next_page('first_page')
+            on_press: app.switch_to_next_page()
 
         # Question text
         Label:
