@@ -10,9 +10,6 @@ from kivy.graphics import *
 Logger.setLevel(LOG_LEVELS["debug"])
 
 
-
-
-
 class StartingPage(Screen):
     pass
 
@@ -25,15 +22,6 @@ class FirstPage(Screen):
     radio_text_1 = StringProperty()
     radio_text_2 = StringProperty()
 
-    def update_page(self, provider: DataProvider) -> None:
-        data = provider.get_window()
-        title = StringProperty(data["title"])
-        status = StringProperty(data["status"])
-        previous_button = StringProperty(data["previous_button"])
-        next_button = StringProperty(data["next_button"])
-        radio_text_1 = StringProperty(data["radio_text_1"])
-        radio_text_2 = StringProperty(data["radio_text_2"])
-
 
 class SecondPage(Screen):
     title = StringProperty()
@@ -42,16 +30,6 @@ class SecondPage(Screen):
     next_button = StringProperty()
     radio_text_1 = StringProperty()
     radio_text_2 = StringProperty()
-
-    def update_page(self, provider: DataProvider) -> None:
-        data = provider.get_window()
-        title = StringProperty(data["title"])
-        status = StringProperty(data["status"])
-        previous_button = StringProperty(data["previous_button"])
-        next_button = StringProperty(data["next_button"])
-        radio_text_1 = StringProperty(data["radio_text_1"])
-        radio_text_2 = StringProperty(data["radio_text_2"])
-
 
 
 class Test(Screen):
@@ -67,8 +45,6 @@ class KnowledgeApp(App):
     def switch_to_next_page(self, page_name):
         self._info = self._provider.update_data(self._info)
 
-        print(self.root.ids)
-
         page = self.root.ids.screen_manager.get_screen(page_name)
         page.title = self._info["title"]
         page.status = self._info["status"]
@@ -79,7 +55,6 @@ class KnowledgeApp(App):
 
         screen_manager = self.root.ids.screen_manager
         screen_manager.current = page_name
-        
         
 
 if __name__ == "__main__":
