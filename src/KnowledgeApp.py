@@ -13,7 +13,7 @@ class StartingPage(Screen):
     pass
 
 
-class FirstPage(Screen):
+class RadioButtons1(Screen):
     title = StringProperty()
     status = StringProperty()
     previous_button = StringProperty()
@@ -22,7 +22,7 @@ class FirstPage(Screen):
     radio_text_2 = StringProperty()
 
 
-class SecondPage(Screen):
+class RadioButtons2(Screen):
     title = StringProperty()
     status = StringProperty()
     previous_button = StringProperty()
