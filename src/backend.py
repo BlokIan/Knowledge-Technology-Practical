@@ -15,9 +15,12 @@ class DataProvider():
         }
     
     def update_data(self, information: dict) -> dict:
-        return self.get_window()
+        return self.get_next_window()
     
-    def get_window(self):
+    def get_next_window(self):
+        return self._dict
+
+    def get_previous_window(self):
         return self._dict
 
 
