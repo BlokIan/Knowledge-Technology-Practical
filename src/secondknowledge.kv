@@ -1,0 +1,30 @@
+#:kivy 2.3.0
+
+###############
+# SCREEN MANAGER
+###############
+<Manager>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 0.8
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    ScreenManager:
+        id: screen_manager
+        StartingPage:
+            name: 'starting_page'
+
+
+###############
+# STARTING PAGE
+###############
+<StartingPage>:
+    GridLayout:
+        cols: 1
+        Button:
+            text: 'Start'
+            size_hint: 0.5, 0.5
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_press: root.manager.current = 'first_page'

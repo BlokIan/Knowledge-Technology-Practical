@@ -1,21 +1,86 @@
 import kivy
 kivy.require("2.3.0")
 from kivy.app import App
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.checkbox import CheckBox
+from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.properties import StringProperty, NumericProperty
+from backend import DataProvider
+from kivy.logger import Logger, LOG_LEVELS
+from kivy.graphics import *
+
+Logger.setLevel(LOG_LEVELS["debug"])
 
 
-class Chat(GridLayout):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-    
+
+
+
+class StartingPage(Screen):
+    pass
+
+
+class FirstPage(Screen):
+    title = StringProperty()
+    status = StringProperty()
+    previous_button = StringProperty()
+    next_button = StringProperty()
+    radio_text_1 = StringProperty()
+    radio_text_2 = StringProperty()
+
+    def update_page(self, provider: DataProvider) -> None:
+        data = provider.get_window()
+        title = StringProperty(data["title"])
+        status = StringProperty(data["status"])
+        previous_button = StringProperty(data["previous_button"])
+        next_button = StringProperty(data["next_button"])
+        radio_text_1 = StringProperty(data["radio_text_1"])
+        radio_text_2 = StringProperty(data["radio_text_2"])
+
+
+class SecondPage(Screen):
+    title = StringProperty()
+    status = StringProperty()
+    previous_button = StringProperty()
+    next_button = StringProperty()
+    radio_text_1 = StringProperty()
+    radio_text_2 = StringProperty()
+
+    def update_page(self, provider: DataProvider) -> None:
+        data = provider.get_window()
+        title = StringProperty(data["title"])
+        status = StringProperty(data["status"])
+        previous_button = StringProperty(data["previous_button"])
+        next_button = StringProperty(data["next_button"])
+        radio_text_1 = StringProperty(data["radio_text_1"])
+        radio_text_2 = StringProperty(data["radio_text_2"])
+
+
+
+class Test(Screen):
+    pass
+
 
 class KnowledgeApp(App):
     def build(self):
-        return Chat()
+        self._provider = DataProvider()
+        self._info = None
+        return Test()
 
+    def switch_to_next_page(self, page_name):
+        self._info = self._provider.update_data(self._info)
+
+        print(self.root.ids)
+
+        page = self.root.ids.screen_manager.get_screen(page_name)
+        page.title = self._info["title"]
+        page.status = self._info["status"]
+        page.previous_button = self._info["previous_button"]
+        page.next_button = self._info["next_button"]
+        page.radio_text_1 = self._info["radio_text_1"]
+        page.radio_text_2 = self._info["radio_text_2"]
+
+        screen_manager = self.root.ids.screen_manager
+        screen_manager.current = page_name
+        
+        
 
 if __name__ == "__main__":
     KnowledgeApp().run()
