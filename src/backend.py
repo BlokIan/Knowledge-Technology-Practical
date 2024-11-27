@@ -11,13 +11,21 @@ class DataProvider():
             "radio_buttons": True, 
             "radio_text_1": "This is one answer",
             "radio_text_2": "This is another answer",
-            "next_page": "radio_buttons_1"
+            "next_page": "text_1",
+            "type_info": "text"
         }
+        self.count = 0
     
     def update_data(self, information: dict) -> dict:
         return self.get_next_window()
     
     def get_next_window(self):
+        if self.count < 2:
+            self.count += 1
+            return self._dict
+
+        self._dict["next_page"] = "radio_buttons_1"
+        self._dict["type_info"] = "radio_buttons"
         return self._dict
 
     def get_previous_window(self):

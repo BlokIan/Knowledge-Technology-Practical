@@ -1,6 +1,39 @@
 #:kivy 2.3.0
 
 ###############
+# MAIN LAYOUT
+###############
+<MainLayout@RelativeLayout>:
+    # Button for previous page
+    Button:
+        text: app.previous_button
+        size_hint: 0.2, 0.2
+        pos_hint: {'x': 0, 'y': 0}
+        on_release: app.switch_to_previous_page()
+
+    # Button for next page
+    Button:
+        text: app.next_button
+        size_hint: 0.2, 0.2
+        pos_hint: {'right': 1, 'y': 0}
+        on_release: app.switch_to_next_page()
+
+    # Question text
+    Label:
+        text: app.title
+        color: 0,0,0,1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+        font_size: 25
+
+    # Status text
+    Label:
+        text: app.status
+        color: 0,0,0,1
+        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+        font_size: 20
+
+
+###############
 # SCREEN MANAGER
 ###############
 <Manager>:
@@ -22,6 +55,9 @@
         RadioButtons2:
             id: radio_buttons_2
             name: 'radio_buttons_2'
+        Text1:
+            id: text_1
+            name: 'text_1'
 
 
 ###############
@@ -46,35 +82,7 @@
     cols: 2
     rows: 4
 
-    RelativeLayout:
-        # Button for previous page
-        Button:
-            text: root.previous_button
-            size_hint: 0.2, 0.2
-            pos_hint: {'x': 0, 'y': 0}
-            on_release: app.switch_to_previous_page()
-
-        # Button for next page
-        Button:
-            text: root.next_button
-            size_hint: 0.2, 0.2
-            pos_hint: {'right': 1, 'y': 0}
-            on_release: app.switch_to_next_page()
-
-        # Question text
-        Label:
-            text: root.title
-            color: 0,0,0,1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-            font_size: 25
-
-        # Status text
-        Label:
-            text: root.status
-            color: 0,0,0,1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-            font_size: 20
-
+    MainLayout:
         # Radio buttons
         GridLayout:
             id: radio_group
@@ -119,35 +127,7 @@
     cols: 2
     rows: 4
 
-    RelativeLayout:
-        # Button for previous page
-        Button:
-            text: root.previous_button
-            size_hint: 0.2, 0.2
-            pos_hint: {'x': 0, 'y': 0}
-            on_release: app.switch_to_previous_page()
-
-        # Button for next page
-        Button:
-            text: root.next_button
-            size_hint: 0.2, 0.2
-            pos_hint: {'right': 1, 'y': 0}
-            on_release: app.switch_to_next_page()
-
-        # Question text
-        Label:
-            text: root.title
-            color: 0,0,0,1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-            font_size: 25
-
-        # Status text
-        Label:
-            text: root.status
-            color: 0,0,0,1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.9}
-            font_size: 20
-
+    MainLayout:
         # Radio buttons
         GridLayout:
             id: radio_group
@@ -181,3 +161,37 @@
                 active: False
                 allow_no_selection: False
                 value: 'option_2'
+
+
+###############
+# TEXT 1
+###############
+<Text1>:
+    id: text_1
+    # I don't really understand why you need cols and rows here rn
+    cols: 2
+    rows: 4
+
+    MainLayout:
+        # Radio buttons
+        GridLayout:
+            id: radio_group
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+
+            cols: 1
+            rows: 1
+            size_hint: 0.6, 0.2
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            RelativeLayout:
+                cols: 1
+                rows: 1
+                size_hint: 0.5, 0.5
+                TextInput:
+                    id: text_input
+                    hint_text: 'Enter text'
+                    multiline: False
