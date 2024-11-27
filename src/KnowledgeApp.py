@@ -25,6 +25,7 @@ class RadioButtons2(Screen):
 
 
 class Text1(Screen):
+    error_text = StringProperty()
     pass
 
 class Text2(Screen):
@@ -39,7 +40,7 @@ class Manager(Screen):
                     if hasattr(child, 'active') and child.active:
                         return child.value
             case "text":
-                pass
+                return page.ids.text_input.text
             case _:
                 Logger.warning("Variable type_info could not be matched, is it missing in the provided data?")
         return None
@@ -59,12 +60,18 @@ class KnowledgeApp(App):
     def switch_to_next_page(self):
         screen_manager = self.root.ids.screen_manager
 
-
         # Get info for next window
         info = self._provider.get_next_window()
         if info != self._info:
             Logger.debug(f"Received the following dictionary: {info}")
         self._info = info
+
+        # Special case for starting_screen
+        if screen_manager.current_screen.name == "starting_page":
+            screen_manager.transition = SlideTransition(direction="left", duration=0.3)
+            page = screen_manager.get_screen(self._info["next_page"])
+            self._switch_page(screen_manager, page)
+            return
 
         # Get page data for next page
         current_page = screen_manager.current_screen
@@ -73,9 +80,13 @@ class KnowledgeApp(App):
             Logger.warning("New page and old page are the same! Transitioning with animation will not work")
 
         # Get input from radio buttons
-        selected_option = self.root.get_input(page, info["type_info"])
-        info["output"] = selected_option
-        Logger.debug(f"Received following option: '{selected_option}'")
+        inputs = self.root.get_input(page, info["type_info"])
+        correct_output = self._check_switch_allowed(inputs, self._info["type_info"])
+        if correct_output == False:
+            Logger.debug("Did not switch pages due to faulty output (ensure page to switch to and type_info is similar)")
+            return
+        info["output"] = inputs
+        Logger.debug(f"Received following option: '{inputs}'")
 
         # Update provider class
         self._provider.update_data(self._info)
@@ -112,6 +123,18 @@ class KnowledgeApp(App):
 
         # Switch to next page
         screen_manager.current = self._info["next_page"]
+    
+    def _check_switch_allowed(self, data: Any, type_info: str):
+        match type_info:
+            case "text":
+                if data == "" or data is None:
+                    self.error_text = ""
+                    return False
+            case "radio_buttons":
+                pass
+            case _:
+                raise NotImplementedError(f"The type_info provided - {type_info} - is not implemented")
+        return True
 
 
 if __name__ == "__main__":
