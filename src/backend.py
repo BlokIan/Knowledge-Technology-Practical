@@ -5,7 +5,6 @@ class DataProvider():
         # self.get_starting_data() needs to be implemented still, get starting data from knowledge system
         self._dict = {
             "title": "This is a question", 
-            "status": "Status: Good", 
             "previous_button": "Previous", 
             "next_button": "Next", 
             "radio_buttons": True, 
@@ -16,10 +15,12 @@ class DataProvider():
         }
         self.count = 0
     
-    def update_data(self, information: dict) -> dict:
-        return self.get_next_window()
+    def update_data(self, information: dict) -> None:
+        if not isinstance(information, dict):
+            raise TypeError(f"Expected dict, received {type(information)}")
+        self._dict = information
     
-    def get_next_window(self):
+    def get_next_window(self) -> dict:
         if self.count < 2:
             self.count += 1
             return self._dict
@@ -28,7 +29,7 @@ class DataProvider():
         self._dict["type_info"] = "radio_buttons"
         return self._dict
 
-    def get_previous_window(self):
+    def get_previous_window(self) -> dict:
         return self._dict
 
 

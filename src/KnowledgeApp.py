@@ -28,7 +28,9 @@ class Text1(Screen):
     error_text = StringProperty()
     pass
 
+
 class Text2(Screen):
+    error_text = StringProperty()
     pass
 
 
@@ -47,7 +49,17 @@ class Manager(Screen):
 
 
 class KnowledgeApp(App):
-    status = StringProperty()
+    """UI aspect of the knowledge base, accepts certain arguments which get passed by the DataProvider through a dictionary:
+        "title": The title text
+        "next_button": Text in the next button
+        "previous_button": Text in the previous button
+        "type_info", accepts: "text", "radio_buttons"
+        "next_page", accepts: "starting_page", "radio_buttons", "text"
+        "radio_text_i": The text for the i-th radio button, requires "next_page" to be "radio_buttons"
+
+       There are some possible outputs:
+        "output": The main output, this is either text input from the user, or "option_i" w.r.t. the radio buttons
+    """
     title = StringProperty()
     next_button = StringProperty()
     previous_button = StringProperty()
@@ -56,6 +68,7 @@ class KnowledgeApp(App):
         self._provider = DataProvider()
         self._info = None
         return Manager()
+
 
     def switch_to_next_page(self):
         screen_manager = self.root.ids.screen_manager
@@ -79,9 +92,9 @@ class KnowledgeApp(App):
         if page.ids == current_page.ids:
             Logger.warning("New page and old page are the same! Transitioning with animation will not work")
 
-        # Get input from radio buttons
+        # Get input and verify
         inputs = self.root.get_input(page, info["type_info"])
-        correct_output = self._check_switch_allowed(inputs, self._info["type_info"])
+        correct_output = self._check_switch_allowed(inputs, self._info["type_info"], page)
         if correct_output == False:
             Logger.debug("Did not switch pages due to faulty output (ensure page to switch to and type_info is similar)")
             return
@@ -94,11 +107,12 @@ class KnowledgeApp(App):
         screen_manager.transition = SlideTransition(direction="left", duration=0.3)
         self._switch_page(screen_manager, page)
 
+
     def switch_to_previous_page(self):
         screen_manager = self.root.ids.screen_manager
 
-        # Get info for next window
-        info = self._provider.get_next_window()
+        # Get info for previous window
+        info = self._provider.get_previous_window()
         if info != self._info:
             Logger.debug(f"Received the following dictionary: {info}")
         self._info = info
@@ -112,10 +126,10 @@ class KnowledgeApp(App):
         screen_manager.transition = SlideTransition(direction="right", duration=0.3)
         self._switch_page(screen_manager, page)
 
+
     def _switch_page(self, screen_manager: Any, page: Any):
         # Update page
         self.title = self._info["title"]
-        self.status = self._info["status"]
         self.previous_button = self._info["previous_button"]
         self.next_button = self._info["next_button"]
         page.radio_text_1 = self._info["radio_text_1"]
@@ -123,12 +137,13 @@ class KnowledgeApp(App):
 
         # Switch to next page
         screen_manager.current = self._info["next_page"]
-    
-    def _check_switch_allowed(self, data: Any, type_info: str):
+
+
+    def _check_switch_allowed(self, data: Any, type_info: str, page: Any):
         match type_info:
             case "text":
                 if data == "" or data is None:
-                    self.error_text = ""
+                    page.error_text = "Invalid input"
                     return False
             case "radio_buttons":
                 pass
