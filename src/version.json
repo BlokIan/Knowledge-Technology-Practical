@@ -1,0 +1,51 @@
+{
+    "knowledge base": [
+        {
+            "description": "bkr registration",
+            "requirements": [
+                {
+                    "name": "bkr",
+                    "question": "Does one of you have a bkr registration?",
+                    "answer_type": "string"
+                },
+                {
+                    "name": "income",
+                    "question": "What is your combined income?",
+                    "answer_type": "integer"
+                }
+            ]
+        }
+    ],
+    "rules": [
+      {
+        "description": "bkr registration",
+        "requirements": [
+            {
+                "name": "bkr",
+                "condition": "==",
+                "value": "no"
+            },
+            {
+                "name": "income",
+                "condition": ">=",
+                "value": 10000
+            }
+        ],
+        "next_step": "advice bkr",
+        "else": "advice yes"
+      },
+      {
+        "description": "advice bkr",
+        "advice": "As you have a bkr registration, you cannot apply for a mortgage. You have to wait the five years retention period before you can apply for a mortgage."
+      },
+      {
+        "description": "advice yes",
+        "advice": "You meet the minimum income requirement for applying for a mortgage."
+      }
+    ],
+    "facts": {
+      "bkr": null,
+      "income": null,
+      "advice": null
+    }
+}

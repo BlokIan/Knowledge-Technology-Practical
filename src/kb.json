@@ -1,0 +1,35 @@
+{
+    "advice": [
+        {
+            "eligitible_criteria":"eligitbility"
+        },
+        {
+            "disorder": "depression or anxiety",
+            "symptoms": [
+                {
+                    "name": "sad",
+                    "question": "Do you feel a sad or blue mood almost all day, most of the days?"
+                },
+                {
+                    "name": "lack of pleasure",
+                    "question": "Do you experience a lack of pleasure or interest in almost all activities you previously enjoyed?"
+                }
+            ]
+        }
+    ],
+    "Rules": [
+        {
+            "current disorder": "depression or anxiety",
+            "required symptoms": [
+                "sad",
+                "lack of pleasure"
+            ],
+            "number": 1,
+            "new direction": "traumatic event",
+            "else": "general anxiety"
+        }
+    ],
+    "Facts": [
+        "sad"
+    ]
+}
