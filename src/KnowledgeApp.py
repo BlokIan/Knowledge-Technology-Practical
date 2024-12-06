@@ -34,6 +34,28 @@ class Text2(Screen):
     pass
 
 
+class YesNo1(Screen):
+    yes_pressed = None
+    error_text = StringProperty()
+
+    def pressed_yes(self):
+        self.yes_pressed = True
+
+    def pressed_no(self):
+        self.yes_pressed = False
+
+
+class YesNo2(Screen):
+    yes_pressed = None
+    error_text = StringProperty()
+
+    def pressed_yes(self):
+        self.yes_pressed = True
+
+    def pressed_no(self):
+        self.yes_pressed = False
+
+
 class Manager(Screen):
     def get_input(self, page: Any, type_info: str) -> Any:
         match type_info:
@@ -43,8 +65,10 @@ class Manager(Screen):
                         return child.value
             case "text":
                 return page.ids.text_input.text
+            case "yesno":
+                return page.yes_pressed
             case _:
-                Logger.warning("Variable type_info could not be matched, is it missing in the provided data?")
+                Logger.warning("Variable type_info could not be matched, is it incorrect in the provided data?")
         return None
 
 
@@ -53,8 +77,7 @@ class KnowledgeApp(App):
         "title": The title text
         "next_button": Text in the next button
         "previous_button": Text in the previous button
-        "type_info", accepts: "text", "radio_buttons"
-        "next_page", accepts: "starting_page", "radio_buttons", "text"
+        "next_page", accepts: "starting_page", "radio_buttons", "text", "yesno"
         "radio_text_i": The text for the i-th radio button, requires "next_page" to be "radio_buttons"
 
        There are some possible outputs:
@@ -63,6 +86,7 @@ class KnowledgeApp(App):
     title = StringProperty()
     next_button = StringProperty()
     previous_button = StringProperty()
+
 
     def build(self):
         self._provider = DataProvider()
@@ -154,6 +178,10 @@ class KnowledgeApp(App):
                     return False
             case "radio":
                 pass
+            case "yesno":
+                if page.yes_pressed is None:
+                    page.error_text = "Please press a button"
+                    return False
             case _:
                 raise NotImplementedError(f"The type_info provided - {type_info} - is not implemented")
         return True

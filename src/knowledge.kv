@@ -54,6 +54,12 @@
         Text2:
             id: text_2
             name: 'text_2'
+        YesNo1:
+            id: yesno_1
+            name: 'yesno_1'
+        YesNo2:
+            id: yesno_2
+            name: 'yesno_2'
 
 
 ###############
@@ -211,7 +217,7 @@
 # TEXT 2
 ###############
 <Text2>:
-    id: text_1
+    id: text_2
     # I don't really understand why you need cols and rows here rn
     cols: 2
     rows: 4
@@ -253,3 +259,87 @@
                         active: True
                         hint_text: 'Enter text'
                         multiline: False
+
+
+###############
+# YES NO 1
+###############
+<YesNo1>:
+    id: yesno_1
+    # I don't really understand why you need cols and rows here rn
+    cols: 2
+    rows: 4
+
+    MainLayout:
+        GridLayout:
+            cols: 1
+            rows: 2
+            size_hint: 0.6, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+            # Error text above text input
+            Label:
+                text: root.error_text
+                color: 1,0,0,1
+                font_size: 13
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.size
+
+            GridLayout:
+                id: radio_group
+                canvas:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+
+                cols: 2
+                rows: 2
+                size_hint: 0.4, 0.6
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+                Button:
+                    text: 'Yes'
+                    on_release: root.pressed_yes()
+                
+                Button:
+                    text: 'No'
+                    on_release: root.pressed_no()
+
+
+###############
+# YES NO 2
+###############
+<YesNo2>:
+    id: yesno_2
+    # I don't really understand why you need cols and rows here rn
+    cols: 2
+    rows: 4
+
+    MainLayout:
+        # Radio buttons
+        GridLayout:
+            id: radio_group
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+
+            cols: 2
+            rows: 2
+            size_hint: 0.4, 0.2
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+
+            Button:
+                text: 'Yes'
+                size_hint: 0.5, 0.5
+                on_release: root.pressed_yes()
+            
+            Button:
+                text: 'No'
+                size_hint: 0.5, 0.5
+                on_release: root.pressed_no()

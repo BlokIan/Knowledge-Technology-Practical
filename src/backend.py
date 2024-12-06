@@ -10,7 +10,7 @@ class DataProvider():
             "radio_buttons": True, 
             "radio_text_1": "This is one answer",
             "radio_text_2": "This is another answer",
-            "next_page": "text",
+            "next_page": "yesno",
         }
         self.count = 0
     
@@ -18,13 +18,20 @@ class DataProvider():
         if not isinstance(information, dict):
             raise TypeError(f"Expected dict, received {type(information)}")
         self._dict = information
-    
+
     def get_next_window(self) -> dict:
+        # This is not how it will be implemented later on but this just showcases all different pages for now (and debugging)
         if self.count < 2:
             self.count += 1
             return self._dict
 
         self._dict["next_page"] = "radio_buttons"
+
+        if self.count < 4:
+            self.count += 1
+            return self._dict
+
+        self._dict["next_page"] = "text"
         return self._dict
 
     def get_previous_window(self) -> dict:
