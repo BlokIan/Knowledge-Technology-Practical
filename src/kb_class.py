@@ -76,7 +76,7 @@ class KnowledgeBase:
 
 
 def main():
-    kb = KnowledgeBase("version.json")
+    kb = KnowledgeBase("KnowledgeBase.json")
     q_or_a, item = kb.question_or_advice()
     while q_or_a != "advice":
         print(item)
