@@ -319,27 +319,39 @@
     rows: 4
 
     MainLayout:
-        # Radio buttons
         GridLayout:
-            id: radio_group
-            canvas:
-                Color:
-                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-
-            cols: 2
+            cols: 1
             rows: 2
-            size_hint: 0.4, 0.2
-            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            size_hint: 0.6, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
-            Button:
-                text: 'Yes'
-                size_hint: 0.5, 0.5
-                on_release: root.pressed_yes()
-            
-            Button:
-                text: 'No'
-                size_hint: 0.5, 0.5
-                on_release: root.pressed_no()
+            # Error text above text input
+            Label:
+                text: root.error_text
+                color: 1,0,0,1
+                font_size: 13
+                halign: 'center'
+                valign: 'bottom'
+                text_size: self.size
+
+            GridLayout:
+                id: radio_group
+                canvas:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+
+                cols: 2
+                rows: 2
+                size_hint: 0.4, 0.6
+                pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+                Button:
+                    text: 'Yes'
+                    on_release: root.pressed_yes()
+                
+                Button:
+                    text: 'No'
+                    on_release: root.pressed_no()
