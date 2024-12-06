@@ -37,7 +37,7 @@ class Text2(Screen):
 class Manager(Screen):
     def get_input(self, page: Any, type_info: str) -> Any:
         match type_info:
-            case "radio_buttons":
+            case "radio":
                 for child in page.ids.radio_group.children:
                     if hasattr(child, 'active') and child.active:
                         return child.value
@@ -67,6 +67,7 @@ class KnowledgeApp(App):
     def build(self):
         self._provider = DataProvider()
         self._info = None
+        self._first_variant_page = False
         return Manager()
 
 
@@ -79,22 +80,27 @@ class KnowledgeApp(App):
             Logger.debug(f"Received the following dictionary: {info}")
         self._info = info
 
+        # Get page data for next page, implemented like this to allow switching between pages
+        page_name = self._info["next_page"]
+        if self._first_variant_page:
+            self._first_variant_page = False
+            page_name = "".join([page_name, "_2"])
+        else:
+            self._first_variant_page = True
+            page_name = "".join([page_name, "_1"])
+        page = screen_manager.get_screen(page_name)
+
         # Special case for starting_screen
         if screen_manager.current_screen.name == "starting_page":
             screen_manager.transition = SlideTransition(direction="left", duration=0.3)
-            page = screen_manager.get_screen(self._info["next_page"])
+            page = screen_manager.get_screen(page_name)
             self._switch_page(screen_manager, page)
             return
 
-        # Get page data for next page
-        current_page = screen_manager.current_screen
-        page = screen_manager.get_screen(self._info["next_page"])
-        if page.ids == current_page.ids:
-            Logger.warning("New page and old page are the same! Transitioning with animation will not work")
-
         # Get input and verify
-        inputs = self.root.get_input(page, info["type_info"])
-        correct_output = self._check_switch_allowed(inputs, self._info["type_info"], page)
+        current_page = screen_manager.current_screen
+        inputs = self.root.get_input(current_page, current_page.name.split("_")[0])
+        correct_output = self._check_switch_allowed(inputs, current_page.name.split("_")[0], current_page)
         if correct_output == False:
             Logger.debug("Did not switch pages due to faulty output (ensure page to switch to and type_info is similar)")
             return
@@ -104,6 +110,7 @@ class KnowledgeApp(App):
         # Update provider class
         self._provider.update_data(self._info)
 
+        # Switch screens
         screen_manager.transition = SlideTransition(direction="left", duration=0.3)
         self._switch_page(screen_manager, page)
 
@@ -136,7 +143,7 @@ class KnowledgeApp(App):
         page.radio_text_2 = self._info["radio_text_2"]
 
         # Switch to next page
-        screen_manager.current = self._info["next_page"]
+        screen_manager.current = page.name
 
 
     def _check_switch_allowed(self, data: Any, type_info: str, page: Any):
@@ -145,7 +152,7 @@ class KnowledgeApp(App):
                 if data == "" or data is None:
                     page.error_text = "Invalid input"
                     return False
-            case "radio_buttons":
+            case "radio":
                 pass
             case _:
                 raise NotImplementedError(f"The type_info provided - {type_info} - is not implemented")

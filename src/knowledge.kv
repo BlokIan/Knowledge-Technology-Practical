@@ -51,6 +51,9 @@
         Text1:
             id: text_1
             name: 'text_1'
+        Text2:
+            id: text_2
+            name: 'text_2'
 
 
 ###############
@@ -160,6 +163,54 @@
 # TEXT 1
 ###############
 <Text1>:
+    id: text_1
+    # I don't really understand why you need cols and rows here rn
+    cols: 2
+    rows: 4
+
+    MainLayout:
+        GridLayout:
+            cols: 1
+            rows: 2
+            size_hint: 0.6, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+            # Error text above text input
+            Label:
+                text: root.error_text
+                color: 1,0,0,1
+                font_size: 13
+                halign: 'left'
+                valign: 'bottom'
+                text_size: self.size
+
+
+            GridLayout:
+                id: text_group
+                canvas:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+
+                cols: 1
+                rows: 1
+                RelativeLayout:
+                    cols: 1
+                    rows: 1
+                    size_hint: 0.5, 0.5
+                    TextInput:
+                        id: text_input
+                        active: True
+                        hint_text: 'Enter text'
+                        multiline: False
+
+
+###############
+# TEXT 2
+###############
+<Text2>:
     id: text_1
     # I don't really understand why you need cols and rows here rn
     cols: 2
