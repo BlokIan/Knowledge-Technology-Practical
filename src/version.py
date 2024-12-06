@@ -39,6 +39,7 @@ def main():
     kb = data["knowledge base"]
     facts = data["facts"]
     rules = data["rules"]
+    
     while "advice" not in current_step:
         kb_item = find_step(current_step, kb)
 
