@@ -1,15 +1,17 @@
 import pandas as pd
 
+
 class User:
-    def __init__(self, income, interest):
+    def __init__(self, income, interest, period):
         self.income = income
         self.interest = interest
-        #self.period = period
-        self.df = self._read_table()
+        self.period = period
+        self.expense_table = self._read_expense_table()
+        self.annuity_table = self._read_annuity_table()
 
 
-    def _read_table(self):
-        file_name = 'table.txt' 
+    def _read_expense_table(self):
+        file_name = 'woonquote.txt' 
         df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
 
         df.columns = df.columns.str.strip()
@@ -47,19 +49,48 @@ class User:
     
 
     def find_max_expense(self):
-        bracket = self._find_interest_bracket(self.interest, self.df.columns)
+        bracket = self._find_interest_bracket(self.interest, self.expense_table.columns)
         if bracket is None:
             return "Invalid interest rate."
-        if self.income in self.df.index:
-            return self.df.loc[self.income, bracket]
+        if self.income in self.expense_table.index:
+            return self.expense_table.loc[self.income, bracket]
         else:
             return "Invalid income."
+        
+    def _read_annuity_table(self):
+        file_name = 'annuity.txt' 
+        df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
+
+        df.columns = df.columns.str.strip()  
+        del df["Per maand"] 
+
+        df["Interest"] = (
+            df["Interest"]
+            .str.replace("%", "") 
+            .str.strip()
+            .astype(float)
+        )
+
+        factor_columns = df.columns[1:]  
+        df.rename(columns={col: int(col) for col in factor_columns}, inplace=True)
+
+        df.set_index("Interest", inplace=True) 
+
+        return df 
+    
+    def find_annuity_factor(self):
+        if self.interest in self.annuity_table.index:
+            return self.annuity_table.loc[self.interest, self.period]
+        else:
+            return "Invalid interest rate."
     
 def main():
     income = 28000
     interest = 1.6
-    user = User(income, interest)
+    period = 360
+    user = User(income, interest, period)
     print(user.find_max_expense())
+    print(user.find_annuity_factor())
 
 if __name__ == "__main__":
     main()
