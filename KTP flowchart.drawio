@@ -1,23 +1,49 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.3">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.3" pages="2">
   <diagram name="Page-1" id="YWarqu7nGKt0LIB1wrjB">
     <mxGraphModel dx="1434" dy="694" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="mqTOyTODxA8IZvUj4Nfn-1" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
-          <mxGeometry x="350" y="120" width="80" height="80" as="geometry" />
+        <mxCell id="mqTOyTODxA8IZvUj4Nfn-1" value="&lt;span id=&quot;docs-internal-guid-5ad19c4f-7fff-b718-e5ac-b6a66cecb07b&quot;&gt;&lt;div&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;Check&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;/span&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=left;" parent="1" vertex="1">
+          <mxGeometry x="320" y="50" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="mqTOyTODxA8IZvUj4Nfn-2" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="370" y="300" as="sourcePoint" />
-            <mxPoint x="370" y="410" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="390" y="200" />
-            </Array>
+        <mxCell id="VVUlmXBKTWj26Wdlc-Sn-10" value="This advice system is not suitable for you.&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VVUlmXBKTWj26Wdlc-Sn-12" value="bkr/income" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jOpQV7l5Q-MQaUMi8PDx-5" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.4;exitY=0.975;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="mqTOyTODxA8IZvUj4Nfn-1" target="VVUlmXBKTWj26Wdlc-Sn-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="340" as="sourcePoint" />
+            <mxPoint x="460" y="430" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mqTOyTODxA8IZvUj4Nfn-3" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
-          <mxGeometry x="270" y="430" width="200" height="200" as="geometry" />
+        <mxCell id="jOpQV7l5Q-MQaUMi8PDx-6" value="No" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" connectable="0" vertex="1" parent="jOpQV7l5Q-MQaUMi8PDx-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jOpQV7l5Q-MQaUMi8PDx-8" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.592;entryY=-0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="mqTOyTODxA8IZvUj4Nfn-1" target="VVUlmXBKTWj26Wdlc-Sn-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="300" as="sourcePoint" />
+            <mxPoint x="560" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jOpQV7l5Q-MQaUMi8PDx-9" value="Yes" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" connectable="0" vertex="1" parent="jOpQV7l5Q-MQaUMi8PDx-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="jOpQV7l5Q-MQaUMi8PDx-12" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ANZrI0xuAt6sej-NaWs-" name="Page-2">
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="6HdrMlssi0hgQ4rEqeCC-1" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;Check:&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;ul style=&quot;text-align: left; margin-top: 0px; margin-bottom: 0px; padding-inline-start: 48px;&quot;&gt;&lt;li style=&quot;list-style-type: disc; font-size: 11pt; font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space: pre;&quot; aria-level=&quot;1&quot; dir=&quot;ltr&quot;&gt;&lt;p style=&quot;line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; role=&quot;presentation&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;font-size: 11pt; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; text-wrap-mode: wrap;&quot;&gt;Are you married?&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;&lt;li style=&quot;list-style-type: disc; font-size: 11pt; font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space: pre;&quot; aria-level=&quot;1&quot; dir=&quot;ltr&quot;&gt;&lt;p style=&quot;line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; role=&quot;presentation&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;font-size: 11pt; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; text-wrap-mode: wrap;&quot;&gt;Are you buying your first house?&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;&lt;li style=&quot;list-style-type: disc; font-size: 11pt; font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space: pre;&quot; aria-level=&quot;1&quot; dir=&quot;ltr&quot;&gt;&lt;p style=&quot;line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; role=&quot;presentation&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;font-size: 11pt; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; text-wrap-mode: wrap;&quot;&gt;Do you have a fixed income?&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;&lt;li style=&quot;list-style-type: disc; font-size: 11pt; font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space: pre;&quot; aria-level=&quot;1&quot; dir=&quot;ltr&quot;&gt;&lt;p style=&quot;line-height: 1.38; margin-top: 0pt; margin-bottom: 0pt;&quot; role=&quot;presentation&quot; dir=&quot;ltr&quot;&gt;&lt;span style=&quot;font-size: 11pt; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; text-wrap-mode: wrap;&quot;&gt;Is this about NHG mortgage?&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;Do you have a BKR registration? &lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;if yes, a negative?&lt;/span&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;How  long do you plan on staying?&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;What is your income?&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;What is the sale price?&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;font-size: 14.6667px; white-space-collapse: preserve;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry y="10" width="550" height="800" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
