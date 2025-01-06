@@ -48,7 +48,7 @@ class User:
         return None
     
 
-    def find_max_expense(self):
+    def _find_max_expense(self):
         bracket = self._find_interest_bracket(self.interest, self.expense_table.columns)
         if bracket is None:
             return "Invalid interest rate."
@@ -83,13 +83,16 @@ class User:
             return self.annuity_table.loc[self.interest, self.period]
         else:
             return "Invalid interest rate."
+        
+    def find_max_loan(self):
+        return self._find_annuity_factor() * self._find_max_expense() 
     
 def main():
     income = 28000
     interest = 1.6
     period = 360
     user = User(income, interest, period)
-    print(user.find_max_expense())
+    print(user._find_max_expense())
     print(user._find_annuity_factor())
 
 if __name__ == "__main__":
