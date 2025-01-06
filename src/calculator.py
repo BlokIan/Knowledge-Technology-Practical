@@ -78,7 +78,7 @@ class User:
 
         return df 
     
-    def find_annuity_factor(self):
+    def _find_annuity_factor(self):
         if self.interest in self.annuity_table.index:
             return self.annuity_table.loc[self.interest, self.period]
         else:
@@ -90,7 +90,7 @@ def main():
     period = 360
     user = User(income, interest, period)
     print(user.find_max_expense())
-    print(user.find_annuity_factor())
+    print(user._find_annuity_factor())
 
 if __name__ == "__main__":
     main()
