@@ -31,9 +31,6 @@
         <mxCell id="jOpQV7l5Q-MQaUMi8PDx-9" value="All yes" style="edgeLabel;resizable=0;html=1;;align=center;verticalAlign=middle;" parent="jOpQV7l5Q-MQaUMi8PDx-8" connectable="0" vertex="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="jOpQV7l5Q-MQaUMi8PDx-12" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="440" y="320" width="120" height="60" as="geometry" />
-        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
