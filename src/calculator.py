@@ -3,12 +3,11 @@ import pandas as pd
 
 class User:
     def __init__(self, income, interest, period):
-        self.income = income
-        self.interest = interest
-        self.period = period
-        self.expense_table = self._read_expense_table()
-        self.annuity_table = self._read_annuity_table()
-
+        self._income = income
+        self._interest = interest
+        self._period = period
+        self._expense_table = self._read_expense_table()
+        self._annuity_table = self._read_annuity_table()
 
     def _read_expense_table(self):
         file_name = 'woonquote.txt' 
@@ -36,7 +35,6 @@ class User:
 
         return df
 
-
     def _find_interest_bracket(self, rate, brackets):
         for bracket in brackets:
             bounds = bracket.replace("%", "").split("-")
@@ -47,13 +45,12 @@ class User:
                 return bracket
         return None
     
-
     def _find_max_expense(self):
-        bracket = self._find_interest_bracket(self.interest, self.expense_table.columns)
+        bracket = self._find_interest_bracket(self._interest, self._expense_table.columns)
         if bracket is None:
             return "Invalid interest rate."
-        if self.income in self.expense_table.index:
-            return self.expense_table.loc[self.income, bracket]
+        if self._income in self._expense_table.index:
+            return self._expense_table.loc[self._income, bracket]
         else:
             return "Invalid income."
         
@@ -79,21 +76,31 @@ class User:
         return df 
     
     def _find_annuity_factor(self):
-        if self.interest in self.annuity_table.index:
-            return self.annuity_table.loc[self.interest, self.period]
+        if self._interest in self._annuity_table.index:
+            return self._annuity_table.loc[self._interest, self._period]
         else:
             return "Invalid interest rate."
         
-    def find_max_loan(self):
-        return self._find_annuity_factor() * self._find_max_expense() 
+    def find_max_mortgage(self):
+        return self._find_annuity_factor() * self._find_max_expense()
     
-def main():
+def main1():
     income = 28000
     interest = 1.6
     period = 360
     user = User(income, interest, period)
     print(user._find_max_expense())
     print(user._find_annuity_factor())
+    print(user.find_max_mortgage())
+
+def main():
+    income = 28000
+    interest = 3.3
+    period = 360
+    user = User(income, interest, period)
+    print(user._find_max_expense())
+    print(user._find_annuity_factor())
+    print(user.find_max_mortgage())
 
 if __name__ == "__main__":
     main()
