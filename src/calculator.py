@@ -82,7 +82,7 @@ class User:
             return "Invalid interest rate."
         
     def find_max_mortgage(self):
-        return self._find_annuity_factor() * self._find_max_expense()
+        return (self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor()
     
 def main1():
     income = 28000
