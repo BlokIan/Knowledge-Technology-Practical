@@ -1,0 +1,210 @@
+{
+    "knowledge base": [
+        {
+            "description": "check",
+            "requirement questions": [
+                {
+                    "name": "married",
+                    "question": "Are you married?",
+                    "answer_type": "yes/no"
+                },
+                {
+                    "name": "first house",
+                    "question": "Are you buying your first house?",
+                    "answer_type": "yes/no"
+                },
+                {
+                    "name": "fixed income",
+                    "question": "Do you have a fixed income?",
+                    "answer_type": "yes/no"
+                },
+                {
+                    "name": "NHG mortgage",
+                    "question": "Is this about NHG mortgage?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "bkr registration",
+            "requirement questions": [
+                {
+                    "name": "bkr",
+                    "question": "Does one of you have a negative bkr registration?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "amount mortgage",
+            "requirement questions": [
+                {
+                    "name": "income",
+                    "question": "What is your combined income?",
+                    "answer_type": "integer"
+                },
+                {
+                    "name": "sale price",
+                    "question": "What is the sale price of the house?",
+                    "answer_type": "integer"
+                },
+                {
+                    "name": "energy label",
+                    "question": "What is the energy label of the house?",
+                    "answer_type": "A++++/A+++, A++, A+, A, or B/C or D/E, F, or G"
+                },
+                {
+                    "name": "own money",
+                    "question": "How much of your own money do you want to spend?",
+                    "answer_type": "integer"
+                }
+            ]
+        },
+        {
+            "description": "annuity or linear",
+            "requirement questions": [
+                {
+                    "name": "Monthly fees",
+                    "question": "What are the maximum monthly fees you can handle?",
+                    "answer_type": "integer"
+                },
+                {
+                    "name": "mortgage preference",
+                    "question": "What is your preference for the mortgage?",
+                    "answer_type": "Montly fees stay the same over the years./The least interest you have to pay back."
+                }
+            ]
+        },
+        {
+            "description": "years in house",
+            "requirement questions": [
+                {
+                    "name": "time in house",
+                    "question": "How long do you plan on staying in this house (in years)?",
+                    "answer_type": "integer"
+                }
+            ]
+        },
+        {
+            "description": "loan from someone other than bank",
+            "requirement questions": [
+                {
+                    "name": "loan from person",
+                    "question": "Are you making use of a loan from a person?",
+                    "answer_type": "integer"
+                },
+                {
+                    "name": "loan from family",
+                    "question": "Is it a loan from family?",
+                    "answer_type": "yes/no"
+                },
+                {
+                    "name": "tax authorithy approval",
+                    "question": "Have the tax authorities approved the loan?",
+                    "answer_type": "yes/no"
+                },
+                {
+                    "name": "bank approval",
+                    "question": "Does the current bank approve this type of loan?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        }
+    ],
+    "rules": [
+        {
+            "description": "check",
+            "requirements":[
+                {
+                    "name": "married",
+                    "condition": "==",
+                    "value": "yes"
+                },
+                {
+                    "name": "first house",
+                    "condition": "==",
+                    "value": "yes"
+                },
+                {
+                    "name": "fixed income",
+                    "condition": "==",
+                    "value": "yes"
+                },
+                {
+                    "name": "NHG mortgage",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "bkr registration",
+            "else": "end advice check failed"
+
+        },
+        {
+            "description": "end advice check failed",
+            "advice": "You cannot use this mortgage advice system, as you do not fulfill all the criteria. These criteria are being married couple buying their first house with a fixed income, who are using a NHG mortgage."
+        },
+        {
+            "description": "bkr registration",
+            "requirements": [
+                {
+                    "name": "bkr",
+                    "condition": "==",
+                    "value": "no"
+                }
+            ],
+            "next_step": "amount mortgage",
+            "else": "end advice bkr"
+        },
+        {
+            "description": "end advice bkr",
+            "advice": "As you have a bkr registration, you cannot apply for a mortgage. You have to wait the five years retention period before you can apply for a mortgage."
+        }, 
+        {
+            "description": "amount mortgage",
+            "requirements": [
+                {
+                    "name": "income",
+                    "condition": "!=",
+                    "value": "None"
+                },
+                {
+                    "name": "own money",
+                    "condition": "!=",
+                    "value": null
+                },
+                {
+                    "name": "sale price",
+                    "minus": "own money",
+                    "condition": "<=",
+                    "value": 435000
+                }
+            ],
+            "next_step": "end advice amount mortgage",
+            "else": "end advice NHG mortgage"
+        },
+        {
+            "description": "end advice NHG mortgage",
+            "advice": "As the sale price of the house is too high and your own money is too low, you cannot buy the house that you would like with an NHG mortgage."
+        },
+        {
+            "description": "end advice amount mortgage",
+            "advice": "The maximum mortgage you can have is: {}",
+            "fill in": ["maximum mortgage"]
+        }
+    ],
+    "facts": {
+        "married": null,
+        "first house": null,
+        "fixed income": null,
+        "NHG mortgage": null,
+        "bkr": null,
+        "income": null,
+        "sale price": null,
+        "energy label": null,
+        "own money": null,
+        "interest": 1.6,
+        "maximum mortgage": null,
+        "advice": []
+    }
+}
