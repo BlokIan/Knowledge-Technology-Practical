@@ -6,7 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 from kivy.properties import StringProperty, NumericProperty, ListProperty
-from backend import DataProvider
+from .backend import DataProvider
 from kivy.logger import Logger, LOG_LEVELS
 from kivy.graphics import *
 from typing import Any
