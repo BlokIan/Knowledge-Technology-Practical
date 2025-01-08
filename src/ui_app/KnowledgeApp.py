@@ -105,7 +105,9 @@ class KnowledgeApp(App):
         "title": The title text
         "next_button": Text in the next button
         "next_page", accepts: "starting_page", "radio_buttons", "text", "yesno"
-        "radio_text_i": The text for the i-th radio button, requires "next_page" to be "radio_buttons"
+        "validate_function": A function which can be used to check the given output
+        "radio_texts", list: A list of the different text options
+        "radio_ammount", int: The ammount of radio button options on the page
 
        There are some possible outputs:
         "output": The main output, this is either text input from the user, or "option_i" w.r.t. the radio buttons
@@ -155,15 +157,15 @@ class KnowledgeApp(App):
             Logger.debug("Did not switch pages due to faulty output (ensure page to switch to and type_info is similar)")
             self._first_variant_page = not self._first_variant_page
             return
-        info["output"] = inputs
-        Logger.debug(f"Received following option: '{inputs}'")
+        self._info["output"] = inputs
+        Logger.debug(f"Received following option from user: '{inputs}'")
 
         # Update provider class
         self._provider.update_data(self._info)
 
         # Switch screens
         try:
-            page.options = ["Option 1", "Option 2", "Option 3", "Option 4"]
+            page.options = self._info["radio_texts"]
             page.on_options()
         except Exception:
             pass
@@ -196,17 +198,28 @@ class KnowledgeApp(App):
         self.title = self._info["title"]
         # self.previous_button = self._info["previous_button"]
         self.next_button = self._info["next_button"]
-        page.radio_text_1 = self._info["radio_text_1"]
-        page.radio_text_2 = self._info["radio_text_2"]
 
         # Switch to next page
         screen_manager.current = page.name
 
 
-    def _check_switch_allowed(self, data: Any, type_info: str, page: Any):
+    def _check_switch_allowed(self, data: Any, type_info: str, page: Any) -> bool:
+        """Check whether you can switch to the next page w.r.t. the input given by the user
+
+        Args:
+            data (Any): The data / input to check
+            type_info (str): What type of data was expected
+            page (Any): The current page being displayed
+
+        Raises:
+            NotImplementedError: _description_
+
+        Returns:
+            _type_: _description_
+        """        
         match type_info:
             case "text":
-                if data == "" or data is None:
+                if data == "" or data is None or self._info["validate_function"](data):
                     page.error_text = "Invalid input"
                     return False
             case "radio":
