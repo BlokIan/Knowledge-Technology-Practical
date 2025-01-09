@@ -1,41 +1,88 @@
+from src.kb.kb_class import KnowledgeBase
+from kivy.logger import Logger, LOG_LEVELS
+
+import os
+KB_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "KnowledgeBase.json")
+
+
 class DataProvider():
-    def __init__(self, dictionary: dict = None,  **kwargs):
-        if dictionary is not None:
-            raise NotImplementedError()
-        # self.get_starting_data() needs to be implemented still, get starting data from knowledge system
-        self._dict = {
-            "title": "This is a question", 
-            "previous_button": "Previous", 
-            "next_button": "Next", 
-            "radio_buttons": True, 
-            "radio_text_1": "This is one answer",
-            "radio_text_2": "This is another answer",
-            "next_page": "yesno",
-        }
-        self.count = 0
+    def __init__(self):
+        self._kb = KnowledgeBase(filename=KB_FILEPATH)
+        self._updated_data = True
+        self._current_page = None
     
     def update_data(self, information: dict) -> None:
+        self._updated_data = True
         if not isinstance(information, dict):
             raise TypeError(f"Expected dict, received {type(information)}")
-        self._dict = information
+        match information["next_page"]:
+            case "yesno":
+                information["output"] = "yes" if information["output"] else "no"
+            case "text":
+                information["output"] = int(information["output"].replace('.', ''))
+            case _:
+                pass
+        Logger.debug(f"Returned the following output to kb: {information["output"]}")
+        self._kb.answer(information["output"])
+
 
     def get_next_window(self) -> dict:
-        # This is not how it will be implemented later on but this just showcases all different pages for now (and debugging)
-        if self.count < 2:
-            self.count += 1
-            return self._dict
+        if not self._updated_data:
+            return self._current_page
+        self._updated_data = False
 
-        self._dict["next_page"] = "radio_buttons"
+        try:
+            result = self._kb.question_or_advice()
+            q_or_a, item, answer_type = result
+        except TypeError:
+            raise ValueError(f"Received the following items from question_or_advice(), expected three different outputs: {result}")
 
-        if self.count < 4:
-            self.count += 1
-            return self._dict
+        new_page = {}
+        if q_or_a != "advice":
+            Logger.info("Asking another question")
+            Logger.debug(f"Item received from kb: {item}\tAnswer_type: {answer_type}")
 
-        self._dict["next_page"] = "text"
-        return self._dict
+            # Transform item and answer type into page information dict
+            match answer_type:
+                case "yes/no":
+                    new_page["next_page"] = "yesno"
+                case "integer":
+                    new_page["next_page"] = "text"
+                    def validate_function(output: str) -> bool:
+                        try:
+                            clean_output = output.replace('.', '')
+                            int(clean_output)
+                            return True
+                        except ValueError:
+                            return False
 
-    def get_previous_window(self) -> dict:
-        return self._dict
+                    new_page["validate_function"] = lambda output: validate_function(output)
+                case _: # Assume multiple choice
+                    new_page["next_page"] = "radio_buttons"
+
+                    # Generate radio buttons options
+                    answer_type: str
+                    choices = answer_type.split("/")
+                    new_page["radio_texts"] = choices
+                    new_page["radio_ammount"] = len(choices)
+
+            new_page["title"] = item
+            new_page["next_button"] = "Next"
+        else:
+            Logger.info("Giving advice")
+            new_page["next_page"] = "advice_page"
+            new_page["title"] = "Our advice"
+            new_page["advice"] = item
+            new_page["next_button"] = "Exit Program"
+
+
+        self._current_page = new_page
+        return new_page
+
+
+    # DEPRECATED FUNCTION MAY RETURN LATER
+    # def get_previous_window(self) -> dict:
+    #     return self._dict
 
 
 if __name__ == "__main__":
@@ -46,3 +93,4 @@ if __name__ == "__main__":
                         radio_buttons = True, 
                         radio_text_1 = "This is one answer",
                         radio_text_2 = "This is another answer")
+    print(DataProvider.get_next_window())
