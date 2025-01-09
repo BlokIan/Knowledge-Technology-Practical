@@ -50,7 +50,7 @@ class User:
         if bracket is None:
             return "Invalid interest rate."
         if self._income in self._expense_table.index:
-            return self._expense_table.loc[self._income, bracket]
+            return float(self._expense_table.loc[self._income, bracket])
         else:
             return "Invalid income."
         
@@ -77,7 +77,7 @@ class User:
     
     def _find_annuity_factor(self):
         if self._interest in self._annuity_table.index:
-            return self._annuity_table.loc[self._interest, self._period]
+            return float(self._annuity_table.loc[self._interest, self._period])
         else:
             return "Invalid interest rate."
         
