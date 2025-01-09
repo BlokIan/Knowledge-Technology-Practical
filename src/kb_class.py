@@ -38,7 +38,6 @@ class KnowledgeBase:
         for kb_item in self._kb:
             if kb_item["description"] == self._current_step:
                 self._kb_item = kb_item
-                self._current_question_index = 0
                 break
 
     def _condition(self, req):
@@ -75,32 +74,21 @@ class KnowledgeBase:
                         return
                     elif not condition:
                         self._current_step = rule["else"]
-                        self._find_step()
+                        self._current_question_index = 0
                         return
                     
                 self._current_step = rule["next_step"]
-                self._find_step()
+                self._current_question_index = 0
                 return
-                
-    def _check_requirements(self):
-        """Check if all requirements of the current step are satisfied."""
-        for rule in self._rules:
-            if rule["description"] == self._current_step:
-                for req in rule["requirements"]:
-                    if not self._condition(req["name"], req["condition"], req["value"]):
-                        self._current_step = rule["else"]
-                        self._find_step()
-                        return False
-                self._current_step = rule["next_step"]
-                self._find_step()
-                return True
     
     def _calculate_mortgage(self):
+        """Calculates the maximum mortgage"""
         user = User(self._facts["income"], round(self._facts["interest"],1), 360)
         return user.find_max_mortgage()
         
     
     def question_or_advice(self):
+        """Infers which question to be asked or advice to be given to the user"""
         if self._current_question_index == 0:
             self._find_step()
 
@@ -116,7 +104,7 @@ class KnowledgeBase:
             return "question", question, answer_type
         
     def answer(self, answer):
-        answer = (int(answer) if self._kb_requirement["answer_type"] == "integer" else answer)
+        """Answer of the user is updated to the facts"""
         self._update_facts(self._kb_requirement["name"], answer)
 
         if self._facts["maximum mortgage"] is None and self._facts["income"] is not None and self._facts["interest"] is not None:
