@@ -1,6 +1,6 @@
 import json
 import re
-from calculator import User
+from .calculator import User
 
 
 class KnowledgeBase:
@@ -97,7 +97,7 @@ class KnowledgeBase:
                 return True
     
     def _calculate_mortgage(self):
-        user = User(self._facts["income"], self._facts["interest"], 360)
+        user = User(self._facts["income"], round(self._facts["interest"],1), 360)
         return user.find_max_mortgage()
         
     
