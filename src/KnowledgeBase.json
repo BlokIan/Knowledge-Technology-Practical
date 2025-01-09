@@ -61,7 +61,7 @@
             ]
         },
         {
-            "description": "annuity or linear",
+            "description": "type mortgage",
             "requirement questions": [
                 {
                     "name": "Monthly fees",
@@ -86,7 +86,7 @@
             ]
         },
         {
-            "description": "loan from someone other than bank",
+            "description": "loan from someone",
             "requirement questions": [
                 {
                     "name": "loan from person",
