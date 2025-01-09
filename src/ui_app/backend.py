@@ -67,11 +67,14 @@ class DataProvider():
                     new_page["radio_ammount"] = len(choices)
 
             new_page["title"] = item
-            new_page["next_button"] = "next"
+            new_page["next_button"] = "Next"
         else:
             Logger.info("Giving advice")
             new_page["next_page"] = "advice_page"
-            new_page["title"] = item
+            new_page["title"] = "Our advice"
+            new_page["advice"] = item
+            new_page["next_button"] = "Exit Program"
+
 
         self._current_page = new_page
         return new_page

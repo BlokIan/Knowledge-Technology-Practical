@@ -16,6 +16,10 @@ class StartingPage(Screen):
     pass
 
 
+class AdvicePage(Screen):
+    pass
+
+
 class RadioButtons1(Screen):
     radio_text_1 = StringProperty()
     radio_text_2 = StringProperty()
@@ -94,6 +98,8 @@ class Manager(Screen):
                 return page.yes_pressed
             case "starting":
                 pass
+            case "advice":
+                pass
             case _:
                 Logger.warning("Variable type_info could not be matched, is it incorrect in the provided data?")
         return None
@@ -126,6 +132,7 @@ class KnowledgeApp(App):
     """
     title = StringProperty()
     next_button = StringProperty()
+    advice = StringProperty()
 
 
     def build(self):
@@ -150,7 +157,7 @@ class KnowledgeApp(App):
         Logger.debug(f"Received following option from user: '{inputs}'")
 
         # Update provider class
-        if current_page.name != "starting_page":
+        if current_page.name != "starting_page" and current_page.name != "advice_page":
             self._provider.update_data(self._info)
 
         # Get info for next window
@@ -158,6 +165,16 @@ class KnowledgeApp(App):
         if info != self._info:
             Logger.debug(f"Received the following dictionary: {info}")
         self._info = info
+
+        # Special case for advice_screen
+        if self._info["next_page"] == "advice_page":
+            if current_page.name == "advice_page":
+                super().stop()
+            screen_manager.transition = SlideTransition(direction="left", duration=0.3)
+            page = screen_manager.get_screen("advice_page")
+            self.advice = self._info["advice"]
+            self._switch_page(screen_manager, page)
+            return
 
         # Get page data for next page, implemented like this to allow switching between pages
         page_name = self._info["next_page"]
@@ -242,6 +259,8 @@ class KnowledgeApp(App):
                     page.error_text = "Please press a button"
                     return False
             case "starting":
+                pass
+            case "advice":
                 pass
             case _:
                 raise NotImplementedError(f"The type_info provided - {type_info} - is not implemented")

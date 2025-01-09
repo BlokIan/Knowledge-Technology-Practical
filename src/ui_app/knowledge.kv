@@ -53,6 +53,9 @@
         YesNo2:
             id: yesno_2
             name: 'yesno_2'
+        AdvicePage:
+            id: advice_page
+            name: 'advice_page'
 
 
 ###############
@@ -327,3 +330,40 @@
                 Button:
                     text: 'No'
                     on_release: root.pressed_no()
+
+
+###############
+# ADVICE PAGE
+###############
+<AdvicePage>:
+    id: advice_page
+    # I don't really understand why you need cols and rows here rn
+    cols: 2
+    rows: 4
+
+    MainLayout:
+        GridLayout:
+            canvas:
+                Color:
+                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+
+            cols: 2
+            size_hint: 0.4, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+
+            Label:
+                text: app.advice
+                text_size: self.width, None
+                size: self.size
+                color: 0,0,0,1
+                pos: self.pos
+                font_size: '18sp'
+            
+
+
+
+            
+            
