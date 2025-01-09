@@ -1,5 +1,7 @@
 import pandas as pd
-
+import os
+WOONQUOTE_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "woonquote.txt")
+ANNUITY_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "annuity.txt")
 
 class User:
     def __init__(self, income, interest, period):
@@ -10,8 +12,7 @@ class User:
         self._annuity_table = self._read_annuity_table()
 
     def _read_expense_table(self):
-        file_name = 'woonquote.txt' 
-        df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
+        df = pd.read_csv(WOONQUOTE_FILEPATH, delimiter="\t", encoding="utf-8")
 
         df.columns = df.columns.str.strip()
         df["Income"] = (
@@ -53,10 +54,9 @@ class User:
             return self._expense_table.loc[self._income, bracket]
         else:
             return "Invalid income."
-        
+
     def _read_annuity_table(self):
-        file_name = 'annuity.txt' 
-        df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
+        df = pd.read_csv(ANNUITY_FILEPATH, delimiter="\t", encoding="utf-8")
 
         df.columns = df.columns.str.strip()  
         del df["Per maand"] 
