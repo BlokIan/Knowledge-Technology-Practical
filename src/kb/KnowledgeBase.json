@@ -51,61 +51,142 @@
                 {
                     "name": "energy label",
                     "question": "What is the energy label of the house?",
-                    "answer_type": "A++++/A+++, A++, A+, A, or B/C or D/E, F, or G"
+                    "answer_type": "A++++ with energy performance guarantee/A++++/A+++/A++, A+/A, B/C, D/E, F, G"
                 },
                 {
                     "name": "own money",
                     "question": "How much of your own money do you want to spend?",
                     "answer_type": "integer"
+                },
+                {
+                    "name": "property valuation",
+                    "question": "What is the property valuation of the house? (woz-waarde in Dutch)",
+                    "answer_type": "integer"
                 }
             ]
         },
         {
-            "description": "annuity or linear",
+            "description": "monthly fees",
             "requirement questions": [
                 {
-                    "name": "Monthly fees",
-                    "question": "What are the maximum monthly fees you can handle?",
+                    "name": "monthly fees",
+                    "question": "Do you have monthly financial obligations (e.g. private lease car, student loan)?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "family loan",
+            "requirement questions": [
+                {
+                    "name": "family loan",
+                    "question": "Do you have a family loan?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "family loan (2)",
+            "requirement questions": [
+                {
+                    "name": "family loan",
+                    "question": "How much are you monthly paying for the family loan?",
                     "answer_type": "integer"
-                },
+                }
+            ]
+        },
+        {
+            "description": "other loan",
+            "requirement questions": [
+                {
+                    "name": "other loan",
+                    "question": "Do you have openstanding loans?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "other loan (2)",
+            "requirement questions": [
+                {
+                    "name": "other loan",
+                    "question": "How much do you spend monthly on the loans?",
+                    "answer_type": "integer"
+                }
+            ]
+        },
+        {
+            "description": "mobile phone",
+            "requirement questions": [
+                {
+                    "name": "mobile phone on credit",
+                    "question": "Did you buy a phone on credit?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "mobile phone (2)",
+            "requirement questions": [
+                {
+                    "name": "mobile phone on credit",
+                    "question": "How much is the credit of the mobile phone?",
+                    "answer_type": "integer"
+                }
+            ]
+        },
+        {
+            "description": "private lease car",
+            "requirement questions": [
+                {
+                    "name": "private lease car",
+                    "question": "Do you have a private lease car?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "private lease car (2)",
+            "requirement questions": [
+                {
+                    "name": "private lease car",
+                    "question": "How much do you pay monthly for the private lease car?",
+                    "answer_type": "integer"
+                }
+            ]
+        },
+        {
+            "description": "student debt",
+            "requirement questions": [
+                {
+                    "name": "student debt",
+                    "question": "Do you have student debt?",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "student debt (2)",
+            "requirement questions": [
+                {
+                    "name": "student debt",
+                    "question": "How much are you obligated to pay monthly of your student debt?",
+                    "answer_type": "integer"
+                }
+            ]
+        },
+        {
+            "description": "type mortgage",
+            "requirement questions": [
                 {
                     "name": "mortgage preference",
-                    "question": "What is your preference for the mortgage?",
-                    "answer_type": "Montly fees stay the same over the years./The least interest you have to pay back."
-                }
-            ]
-        },
-        {
-            "description": "years in house",
-            "requirement questions": [
-                {
-                    "name": "time in house",
-                    "question": "How long do you plan on staying in this house (in years)?",
-                    "answer_type": "integer"
-                }
-            ]
-        },
-        {
-            "description": "loan from someone other than bank",
-            "requirement questions": [
-                {
-                    "name": "loan from person",
-                    "question": "Are you making use of a loan from a person?",
-                    "answer_type": "integer"
+                    "question": "What are your preferences for a mortgage?",
+                    "answer_type": "Higher initial payments, but lower total interest costs./Monthly mortgage fees stay the same over the years."
                 },
                 {
-                    "name": "loan from family",
-                    "question": "Is it a loan from family?",
-                    "answer_type": "yes/no"
-                },
-                {
-                    "name": "tax authorithy approval",
-                    "question": "Have the tax authorities approved the loan?",
-                    "answer_type": "yes/no"
-                },
-                {
-                    "name": "bank approval",
-                    "question": "Does the current bank approve this type of loan?",
+                    "name": "payment comfortable",
+                    "question": "Are you comfortable with paying average monthly payment of {} in the first year?",
+                    "fill in": "linear net monthly fees",
                     "answer_type": "yes/no"
                 }
             ]
@@ -166,7 +247,7 @@
                 {
                     "name": "income",
                     "condition": "!=",
-                    "value": "None"
+                    "value": null
                 },
                 {
                     "name": "own money",
@@ -178,19 +259,198 @@
                     "minus": "own money",
                     "condition": "<=",
                     "value": 435000
+                },
+                {
+                    "name": "property valuation",
+                    "condition": "!=",
+                    "value": null
                 }
             ],
-            "next_step": "end advice amount mortgage",
+            "next_step": "monthly fees",
             "else": "end advice NHG mortgage"
         },
         {
-            "description": "end advice NHG mortgage",
-            "advice": "As the sale price of the house is too high and your own money is too low, you cannot buy the house that you would like with an NHG mortgage."
+            "description": "monthly fees",
+            "requirements": [
+                {
+                    "name": "monthly fees",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "family loan",
+            "else": "advice amount mortgage"
         },
         {
-            "description": "end advice amount mortgage",
-            "advice": "The maximum mortgage you can have is: {}",
-            "fill in": ["maximum mortgage"]
+            "description": "family loan",
+            "requirements": [
+                {
+                    "name": "family loan",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "family loan (2)",
+            "else": "other loan"
+        },
+        {
+            "description": "family loan (2)",
+            "requirements": [
+                {
+                    "name": "family loan",
+                    "condition": ">=",
+                    "value": 0
+                }
+            ],
+            "next_step": "other loan"
+        },
+        {
+            "description": "other loan",
+            "requirements": [
+                {
+                    "name": "other loan",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "other loan (2)",
+            "else": "mobile phone"
+        },
+        {
+            "description": "other loan (2)",
+            "requirements": [
+                {
+                    "name": "other loan",
+                    "condition": ">=",
+                    "value": 0
+                }
+            ],
+            "next_step": "mobile phone"
+        },
+        {
+            "description": "mobile phone",
+            "requirements": [
+                {
+                    "name": "mobile phone on credit",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "mobile phone",
+            "else": "private lease car"
+        },
+        {
+            "description": "mobile phone (2)",
+            "requirements": [
+                {
+                    "name": "mobile phone on credit",
+                    "condition": ">=",
+                    "value": 0
+                }
+            ],
+            "next_step": "private lease car"
+        },
+        {
+            "description": "private lease car",
+            "requirements": [
+                {
+                    "name": "private lease car",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "private lease car (2)",
+            "else": "student debt"
+        },
+        {
+            "description": "private lease car (2)",
+            "requirements": [
+                {
+                    "name": "private lease car",
+                    "condition": ">=",
+                    "value": 0
+                }
+            ],
+            "next_step": "student debt"
+        },
+        {
+            "description": "student debt",
+            "requirements": [
+                {
+                    "name": "student debt",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "student debt (2)",
+            "else": "bank"
+        },
+        {
+            "description": "student debt",
+            "requirements": [
+                {
+                    "name": "student debt",
+                    "condition": ">=",
+                    "value": 0
+                }
+            ],
+            "next_step": "bank"
+        },
+        {
+            "description": "bank",
+            "requirements": [
+                {
+                    "name": "family loan",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "advice bank ING",
+            "else": "advice bank Vista"
+        },
+        {
+            "description": "advice bank ING",
+            "advice": "As you have a family loan, we advise a loan from bank ING with interest: {}",
+            "fill in": "interest",
+            "next_step": "advice amount mortgage"
+
+        },
+        {
+            "description": "advice bank Vista",
+            "advice": "We advise a loan from bank Vista with interest: {}",
+            "fill in": "interest",
+            "next_step": "advice amount mortgage"
+        },
+        {
+            "description": "advice amount mortgage",
+            "advice": "The maximum mortgage you can receive is: {}.",
+            "fill in": "maximum mortgage",
+            "next_step": "type mortgage"
+        },
+        {
+            "description": "type mortgage",
+            "requirements": [
+                {
+                    "name": "mortgage preference",
+                    "condition": "==",
+                    "value": "Higher initial payments, but lower total interest costs."
+                },
+                {
+                    "name": "payment comfortable",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "end advice linear mortgage",
+            "else": "end advice annuity mortgage"
+        },
+        {
+            "description": "end advice linear mortgage",
+            "advice": "It is advised to take a linear mortgage."
+        },
+        {
+            "description": "end advice annuity mortgage",
+            "advice": "It is advised to take an annuity mortgage."
         }
     ],
     "facts": {
@@ -198,13 +458,31 @@
         "first house": null,
         "fixed income": null,
         "NHG mortgage": null,
+
         "bkr": null,
+
         "income": null,
         "sale price": null,
         "energy label": null,
         "own money": null,
-        "interest": 1.6,
+        "property valuation": null,
+
+        "monthly fees": null,
+        "family loan": null,
+        "other loan": null,
+        "mobile phone on credit": null,
+        "private lease car": null,
+        "student debt": null,
+
+        "interest": null,
         "maximum mortgage": null,
+
+        "linear gross monthly fees": null,
+        "annuity gross monthly fees": null,
+        "linear net monthly fees": null,
+        "annuity net monthly fees": null,
+        "mortgage preference": null,
+        "payment comfortable": null,
         "advice": []
     }
 }
