@@ -14,7 +14,7 @@ class User:
         self._month_interest = interest / 100 / 12
         self._costs = monthly_costs
         self._student_debt = student_debt
-        self._perc_interest_deduction = 0.3748 # 0.3697
+        self._perc_interest_deduction = 0.3697 # 2025 value: 0.3748
         self._expense_table = self._read_expense_table()
         self._annuity_table = self._read_annuity_table()
         self._bracket= None
@@ -114,7 +114,7 @@ class User:
                 return 0 
             
     def _less_mortgage_student_debt(self):
-        if type(self._student_debt) == str:
+        if self._student_debt is None or type(self._student_debt) == str:
             return 0
         factor = 0
         match self._bracket:

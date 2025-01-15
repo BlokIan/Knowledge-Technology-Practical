@@ -279,7 +279,7 @@
                 }
             ],
             "next_step": "family loan",
-            "else": "advice amount mortgage"
+            "else": "bank"
         },
         {
             "description": "family loan",
@@ -446,11 +446,13 @@
         },
         {
             "description": "end advice linear mortgage",
-            "advice": "It is advised to take a linear mortgage."
+            "advice": "It is advised to take a linear mortgage.\nBased on this, you have gross monthly costs of {} and net monthly costs of {}.",
+            "fill in": ["linear gross monthly fees", "linear net monthly fees"]
         },
         {
             "description": "end advice annuity mortgage",
-            "advice": "It is advised to take an annuity mortgage."
+            "advice": "It is advised to take an annuity mortgage.\nBased on this, you have gross monthly costs of {} and net monthly costs of {}.",
+            "fill in": ["annuity gross monthly fees", "annuity net monthly fees"]
         }
     ],
     "facts": {
@@ -468,7 +470,7 @@
         "property valuation": null,
 
         "monthly fees": null,
-        "family loan": null,
+        "family loan": "no",
         "other loan": null,
         "mobile phone on credit": null,
         "private lease car": null,

@@ -112,7 +112,7 @@ class User:
                 return 0 
             
     def _less_mortgage_student_debt(self):
-        if type(self._student_debt) == str:
+        if self._student_debt is None or type(self._student_debt) == str:
             return 0
         factor = 0
         match self._bracket:

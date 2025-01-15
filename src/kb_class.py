@@ -30,7 +30,10 @@ class KnowledgeBase:
         for rule in self._rules:
             if rule["description"] == self._current_step and "advice" in rule:
                 if "fill in" in rule:
-                    return rule["advice"].format(self._facts[rule["fill in"]])
+                    if type(rule["fill in"]) == str:
+                        return rule["advice"].format(self._facts[rule["fill in"]])
+                    else:
+                        return rule["advice"].format(*[self._facts[key] for key in rule["fill in"]])
                 return rule["advice"]
         return None
     
@@ -128,8 +131,7 @@ class KnowledgeBase:
             if "bank" in self._current_step:
                 self._update_facts("interest", self._interest_bank())
                 if (self._facts["maximum mortgage"] is None
-                    and all(self._facts[key] is not None for key in ["income", "interest", "energy label", "property valuation", "student debt"])
-                    and self._facts["student debt"] != "yes"):
+                    and all(self._facts[key] is not None for key in ["income", "interest", "energy label", "property valuation"])):
                     self._update_mortgage_facts()
 
             self._update_facts("advice", self._get_advice())
