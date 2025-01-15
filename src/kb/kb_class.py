@@ -1,5 +1,5 @@
 import json
-from calculator import User
+from .calculator import User
 
 
 class KnowledgeBase:
