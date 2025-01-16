@@ -80,11 +80,6 @@ class DataProvider():
         return new_page
 
 
-    # DEPRECATED FUNCTION MAY RETURN LATER
-    # def get_previous_window(self) -> dict:
-    #     return self._dict
-
-
 if __name__ == "__main__":
     data = DataProvider(title = "This is a question", 
                         status = "Status: Good", 

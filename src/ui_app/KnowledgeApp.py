@@ -257,26 +257,6 @@ class KnowledgeApp(App):
         self._switch_page(screen_manager, page)
 
 
-    # Deprecated function which may get implemented later on still
-    # def switch_to_previous_page(self):
-    #     screen_manager = self.root.ids.screen_manager
-
-    #     # Get info for previous window
-    #     info = self._provider.get_previous_window()
-    #     if info != self._info:
-    #         Logger.debug(f"Received the following dictionary: {info}")
-    #     self._info = info
-
-    #     # Get page data for next page
-    #     current_page = screen_manager.current_screen
-    #     page = screen_manager.get_screen(self._info["next_page"])
-    #     if page.ids == current_page.ids:
-    #         Logger.warning("New page and old page are the same! Transitioning with animation will not work")
-
-    #     screen_manager.transition = SlideTransition(direction="right", duration=0.3)
-    #     self._switch_page(screen_manager, page)
-
-
     def _switch_page(self, screen_manager: Any, page: Any):
         # Update page
         self.title = self._info["title"]
