@@ -75,25 +75,30 @@
 # RADIO BUTTONS 1
 ###############
 <RadioButtons1>:
-    id: radio_buttons_1
-    # I don't really understand why you need cols and rows here rn
-    cols: 2
-    rows: 4
+    id: radio_buttons_2
 
     MainLayout:
-        # Radio buttons
-        GridLayout:
-            id: radio_group
-            canvas:
-                Color:
-                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-
-            cols: 2
+        # Radio buttons with scrolling support
+        ScrollView:
             size_hint: 0.4, 0.4
             pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            do_scroll_x: False  # Disable horizontal scrolling
+            do_scroll_y: True   # Enable vertical scrolling
+
+            GridLayout:
+                id: radio_group
+                canvas:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Background color
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+
+                cols: 1  # Keep one column for label + checkbox pairs
+                size_hint_y: None  # Necessary for dynamic height
+                height: self.minimum_height  # Automatically adjust to content height
+                row_default_height: 50  # Set default height for rows
+                row_force_default: True
 
 
 ###############
@@ -101,43 +106,29 @@
 ###############
 <RadioButtons2>:
     id: radio_buttons_2
-    # I don't really understand why you need cols and rows here rn
-    cols: 2
-    rows: 4
 
     MainLayout:
-        # Radio buttons
-        GridLayout:
-            id: radio_group
-            canvas:
-                Color:
-                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos
-
-            cols: 2
+        # Radio buttons with scrolling support
+        ScrollView:
             size_hint: 0.4, 0.4
             pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            do_scroll_x: False  # Disable horizontal scrolling
+            do_scroll_y: True   # Enable vertical scrolling
 
-            Label:
-                text: root.radio_text_1
-                color: 0,0,0,1
-            CheckBox:
-                id: radio_1
-                group: 'answer_2'
-                active: True
-                allow_no_selection: False
-                value: 'option_1'
-            Label:
-                text: root.radio_text_2
-                color: 0,0,0,1
-            CheckBox:
-                id: radio_2
-                group: 'answer_2'
-                active: False
-                allow_no_selection: False
-                value: 'option_2'
+            GridLayout:
+                id: radio_group
+                canvas:
+                    Color:
+                        rgba: 1, 1, 1, 1  # Background color
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+
+                cols: 1  # Keep one column for label + checkbox pairs
+                size_hint_y: None  # Necessary for dynamic height
+                height: self.minimum_height  # Automatically adjust to content height
+                row_default_height: 50  # Set default height for rows
+                row_force_default: True
 
 
 ###############
@@ -337,30 +328,36 @@
 ###############
 <AdvicePage>:
     id: advice_page
-    # I don't really understand why you need cols and rows here rn
-    cols: 2
-    rows: 4
-
     MainLayout:
-        GridLayout:
-            canvas:
+        ScrollView:
+            size_hint: 0.4, 0.4
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            do_scroll_x: False  # Disable horizontal scrolling
+            do_scroll_y: True   # Enable vertical scrolling
+
+            canvas.before:
                 Color:
                     rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
 
-            cols: 2
-            size_hint: 0.4, 0.4
-            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            # Container for the text (important for ScrollView functionality)
+            GridLayout:
+                cols: 1
+                size_hint_y: None  # Allow dynamic height
+                height: self.minimum_height  # Adjust to fit content
 
-            Label:
-                text: app.advice
-                text_size: self.width, None
-                size: self.size
-                color: 0,0,0,1
-                pos: self.pos
-                font_size: '18sp'
+                Label:
+                    text: app.advice
+                    text_size: self.width - 20, None  # Wrap text within a specific width
+                    size_hint_y: None  # Enable dynamic height
+                    height: self.texture_size[1] + 20  # Match height to text
+                    color: 0, 0, 0, 1
+                    font_size: '18sp'
+
+            
+
             
 
 

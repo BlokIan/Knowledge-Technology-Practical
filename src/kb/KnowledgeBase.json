@@ -30,7 +30,7 @@
             "requirement questions": [
                 {
                     "name": "bkr",
-                    "question": "Does one of you have a negative bkr registration?",
+                    "question": "Does one of you have a negative bkr registration?\nThis is a situation in which one of you has a delay in payment of a loan.",
                     "answer_type": "yes/no"
                 }
             ]
@@ -44,8 +44,13 @@
                     "answer_type": "integer"
                 },
                 {
-                    "name": "sale price",
-                    "question": "What is the sale price of the house?",
+                    "name": "market value",
+                    "question": "What is the market value of the house?",
+                    "answer_type": "integer"
+                },
+                {
+                    "name": "bid",
+                    "question": "What is the offer that you would like to make for the house?",
                     "answer_type": "integer"
                 },
                 {
@@ -56,11 +61,6 @@
                 {
                     "name": "own money",
                     "question": "How much of your own money do you want to spend?",
-                    "answer_type": "integer"
-                },
-                {
-                    "name": "property valuation",
-                    "question": "What is the property valuation of the house? (woz-waarde in Dutch)",
                     "answer_type": "integer"
                 }
             ]
@@ -179,7 +179,12 @@
             "description": "type mortgage",
             "requirement questions": [
                 {
-                    "name": "mortgage preference",
+                    "name": "mortgage amount preference",
+                    "question": "Do you want to get as much mortgage as possible?",
+                    "answer_type": "yes/no"
+                },
+                {
+                    "name": "mortgage costs preference",
                     "question": "What are your preferences for a mortgage?",
                     "answer_type": "Higher initial payments, but lower total interest costs./Monthly mortgage fees stay the same over the years."
                 },
@@ -187,6 +192,16 @@
                     "name": "payment comfortable",
                     "question": "Are you comfortable with paying average monthly payment of {} in the first year?",
                     "fill in": "linear net monthly fees",
+                    "answer_type": "yes/no"
+                }
+            ]
+        },
+        {
+            "description": "renovations",
+            "requirement questions": [
+                {
+                    "name": "renovations",
+                    "question": "Do you plan on doing renovations or make the house more sustainable?",
                     "answer_type": "yes/no"
                 }
             ]
@@ -223,7 +238,7 @@
         },
         {
             "description": "end advice check failed",
-            "advice": "You cannot use this mortgage advice system, as you do not fulfill all the criteria. These criteria are being married couple buying their first house with a fixed income, who are using a NHG mortgage."
+            "advice": "You cannot use this mortgage advice system, as you do not fulfill all the criteria. These criteria are being married couple buying their first house with a fixed income, who are using a NHG mortgage. Please check with your mortgage advisor for possibilities of a mortgage."
         },
         {
             "description": "bkr registration",
@@ -239,7 +254,7 @@
         },
         {
             "description": "end advice bkr",
-            "advice": "As you have a bkr registration, you cannot apply for a mortgage. You have to wait the five years retention period before you can apply for a mortgage."
+            "advice": "As you have a negative bkr registration, you cannot apply for a mortgage. Consult a mortgage advisor to get advice on your possibilities."
         }, 
         {
             "description": "amount mortgage",
@@ -255,19 +270,17 @@
                     "value": null
                 },
                 {
-                    "name": "sale price",
-                    "minus": "own money",
+                    "name": "market value",
                     "condition": "<=",
                     "value": 435000
-                },
-                {
-                    "name": "property valuation",
-                    "condition": "!=",
-                    "value": null
                 }
             ],
             "next_step": "monthly fees",
             "else": "end advice NHG mortgage"
+        },
+        {
+            "description": "end advice NHG mortgage",
+            "advice": "As the market value of the house is too high, you apply for a NHG mortgage. Consult your mortgage advisor for possibilities."
         },
         {
             "description": "monthly fees",
@@ -410,28 +423,50 @@
         },
         {
             "description": "advice bank ING",
-            "advice": "As you have a family loan, we advise a loan from bank ING with interest: {}",
+            "advice": "As you have a family loan, we advise a loan from bank ING with interest: {}%.",
             "fill in": "interest",
             "next_step": "advice amount mortgage"
-
         },
         {
             "description": "advice bank Vista",
-            "advice": "We advise a loan from bank Vista with interest: {}",
+            "advice": "We advise a loan from bank Vista with interest: {}%.",
             "fill in": "interest",
             "next_step": "advice amount mortgage"
         },
         {
             "description": "advice amount mortgage",
-            "advice": "The maximum mortgage you can receive is: {}.",
+            "advice": "The maximum mortgage you can receive is: €{}.",
             "fill in": "maximum mortgage",
             "next_step": "type mortgage"
+        },
+        {
+            "description": "buy possibility",
+            "requirements": [
+                {
+                    "name": "bid",
+                    "minus": ["maximum mortgage", "own money"],
+                    "condition": "<=",
+                    "value": 0
+                }
+            ],
+            "next_step": "type mortgage",
+            "else": "advice buy possibility"
+        },
+        {
+            "description": "end advice buy possibility",
+            "advice": "The maximum mortgage combined with your down payment of €{} is not enough to purchase the house, considering your maximum bid (€{}).\nThe mortgage combined with your own money would allow you to bid {max bid}.\nConsult your mortgage advisor to discuss further possibilities.",
+            "fill in": ["own money", "bid", "max bid"]
         },
         {
             "description": "type mortgage",
             "requirements": [
                 {
-                    "name": "mortgage preference",
+                    "name": "mortgage amount preference",
+                    "condition": "==",
+                    "value": "no"
+                },
+                {
+                    "name": "mortgage costs preference",
                     "condition": "==",
                     "value": "Higher initial payments, but lower total interest costs."
                 },
@@ -441,18 +476,40 @@
                     "value": "yes"
                 }
             ],
-            "next_step": "end advice linear mortgage",
-            "else": "end advice annuity mortgage"
+            "next_step": "advice linear mortgage",
+            "else": "advice annuity mortgage"
         },
         {
-            "description": "end advice linear mortgage",
-            "advice": "It is advised to take a linear mortgage.\nIn the first year, your average gross monthly costs of {} and your average net monthly costs of {}.",
-            "fill in": ["linear gross monthly fees", "linear net monthly fees"]
+            "description": "advice linear mortgage",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n -gross monthly costs €{}\n-net monthly costs of €{}.",
+            "fill in": ["own money", "bid", "linear gross monthly fees", "linear net monthly fees"], 
+            "next_step": "renovations"
         },
         {
-            "description": "end advice annuity mortgage",
-            "advice": "It is advised to take an annuity mortgage.\nIn the first year, your average gross monthly costs of {} and your average net monthly costs of {}.",
-            "fill in": ["annuity gross monthly fees", "annuity net monthly fees"]
+            "description": "advice annuity mortgage",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n -gross monthly costs €{}\n-net monthly costs of €{}.",
+            "fill in": ["own money", "bid", "annuity gross monthly fees", "annuity net monthly fees"],
+            "next_step": "renovations"
+        },
+        {
+            "description": "renovations",
+            "requirements": [
+                {
+                    "name": "renovations",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "end advice renovations",
+            "else": "end advice disclaimer"
+        },
+        {
+            "description": "end advice renovations",
+            "advice": "As you would like to plan renovations or make the house more sustainable, it is advisable to discuss this with a mortgage advisor."
+        },
+        {
+            "description": "end advice disclaimer",
+            "advice": "Please note that this system only gives a rough indication of your options. Always consult a professional mortgage advisor to discuss other options."
         }
     ],
     "facts": {
@@ -464,10 +521,10 @@
         "bkr": null,
 
         "income": null,
-        "sale price": null,
+        "market value": null,
+        "bid" : null,
         "energy label": null,
         "own money": null,
-        "property valuation": null,
 
         "monthly fees": null,
         "family loan": "no",
@@ -478,13 +535,19 @@
 
         "interest": null,
         "maximum mortgage": null,
+        "max bid": null,
 
         "linear gross monthly fees": null,
         "annuity gross monthly fees": null,
         "linear net monthly fees": null,
         "annuity net monthly fees": null,
-        "mortgage preference": null,
+
+        "mortgage amount preference": null,
+        "mortgage costs preference": null,
         "payment comfortable": null,
+
+        "renovations": null,
+
         "advice": []
     }
 }
