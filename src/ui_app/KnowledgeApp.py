@@ -1,5 +1,6 @@
 import kivy
 kivy.require("2.3.0")
+from kivy.metrics import dp
 from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
@@ -38,11 +39,11 @@ class RadioButtons1(Screen):
             # Multiline Label
             label = Label(
                 text=option,
-                text_size=(200, None),  # Adjust text wrapping width
+                text_size=(dp(200), None),  # Adjust text wrapping width
                 halign="left",
                 valign="middle",
                 size_hint=(None, None),
-                size=(200, 50),
+                size=(dp(200), dp(50)),
                 color=(0,0,0,1)
             )
             label.bind(size=lambda lbl, _: lbl.text_size)  # Dynamically adjust text_size
@@ -79,11 +80,11 @@ class RadioButtons2(Screen):
             # Multiline Label
             label = Label(
                 text=option,
-                text_size=(200, None),  # Adjust text wrapping width
+                text_size=(dp(200), None),  # Adjust text wrapping width
                 halign="left",
                 valign="middle",
                 size_hint=(None, None),
-                size=(200, 50),
+                size=(dp(200), dp(50)),
                 color=(0,0,0,1)
             )
             label.bind(size=lambda lbl, _: lbl.text_size)  # Dynamically adjust text_size
