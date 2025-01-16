@@ -88,19 +88,20 @@
             do_scroll_x: False  # Disable horizontal scrolling
             do_scroll_y: True   # Enable vertical scrolling
 
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+
             GridLayout:
                 id: radio_group
-                canvas:
-                    Color:
-                        rgba: 1, 1, 1, 1  # Background color
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
 
                 cols: 1  # Keep one column for label + checkbox pairs
                 size_hint_y: None  # Necessary for dynamic height
                 height: self.minimum_height  # Automatically adjust to content height
-                row_default_height: 50  # Set default height for rows
+                row_default_height: dp(50)  # Set default height for rows
                 row_force_default: True
 
 
@@ -118,19 +119,20 @@
             do_scroll_x: False  # Disable horizontal scrolling
             do_scroll_y: True   # Enable vertical scrolling
 
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1  # Set the background color (R, G, B, Alpha)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+
             GridLayout:
                 id: radio_group
-                canvas:
-                    Color:
-                        rgba: 1, 1, 1, 1  # Background color
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
 
                 cols: 1  # Keep one column for label + checkbox pairs
                 size_hint_y: None  # Necessary for dynamic height
                 height: self.minimum_height  # Automatically adjust to content height
-                row_default_height: 50  # Set default height for rows
+                row_default_height: dp(50)  # Set default height for rows
                 row_force_default: True
 
 
