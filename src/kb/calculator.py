@@ -188,7 +188,7 @@ class User:
         if self._max_mortgage > self._woz:
             self._max_mortgage = self._woz
         
-        return self._max_mortgage
+        return round(self._max_mortgage)
     
     def monthly_costs(self):
         if self._max_mortgage is None:
