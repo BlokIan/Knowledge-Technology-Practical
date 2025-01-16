@@ -178,7 +178,8 @@ class User:
         return linear_mortgage_repayment + linear_interest_payment / 12
 
     def _new_max_mortgage(self):
-        return (self._annuity_costs() - self._costs - self._student_debt * self._factor_student_debt()) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
+        student_debt = self._student_debt if type(self._student_debt) == int else 0
+        return (self._annuity_costs() - self._costs - student_debt * self._factor_student_debt()) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
     def find_max_mortgage(self):
         self._max_mortgage = int(round((self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor(),0))

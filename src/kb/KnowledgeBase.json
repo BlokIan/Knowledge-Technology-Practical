@@ -486,13 +486,13 @@
         },
         {
             "description": "advice linear mortgage",
-            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n - gross monthly costs €{}\n - net monthly costs of €{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, and one-time NHG fee.",
             "fill in": ["own money", "bid", "linear gross monthly fees", "linear net monthly fees"], 
             "next_step": "renovations"
         },
         {
             "description": "advice annuity mortgage",
-            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n - gross monthly costs €{}\n - net monthly costs of €{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, and one-time NHG fee.",
             "fill in": ["own money", "bid", "annuity gross monthly fees", "annuity net monthly fees"],
             "next_step": "renovations"
         },
