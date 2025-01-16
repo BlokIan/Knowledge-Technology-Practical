@@ -3,6 +3,8 @@ kivy.require("2.3.0")
 from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
+from kivy.graphics import Color, Line
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 from kivy.properties import StringProperty, NumericProperty, ListProperty
@@ -26,31 +28,80 @@ class RadioButtons1(Screen):
     options = ["Option 1", "Option 2", "Option 3", "Option 4"]
 
     def on_options(self):
-        radio_group = self.ids.radio_group
-        radio_group.clear_widgets()
+        layout = self.ids.radio_group
+        layout.clear_widgets()
 
         for i, option in enumerate(self.options):
-            radio_group.add_widget(Label(text=option, color=(0, 0, 0, 1)))
+            # Container for each label and checkbox pair
+            container = GridLayout(cols=2, size_hint_y=None, height=50)
+   
+            # Multiline Label
+            label = Label(
+                text=option,
+                text_size=(200, None),  # Adjust text wrapping width
+                halign="left",
+                valign="middle",
+                size_hint=(None, None),
+                size=(200, 50),
+                color=(0,0,0,1)
+            )
+            label.bind(size=lambda lbl, _: lbl.text_size)  # Dynamically adjust text_size
+            container.add_widget(label)
 
-            checkbox = CheckBox(group="answer_1", value=option, active=True if i == 0 else False, allow_no_selection=False)
-            radio_group.add_widget(checkbox)
+            # CheckBox
+            checkbox = CheckBox(
+                group="answer_2",
+                active=True if i == 0 else False
+            )
+            checkbox.value = option
+            container.add_widget(checkbox)
+
+            # Add container to layout
+            layout.add_widget(container)
+
+        # Ensure dynamic height of the GridLayout
+        layout.height = layout.minimum_height
 
 
 class RadioButtons2(Screen):
     radio_text_1 = StringProperty()
     radio_text_2 = StringProperty()
-
     options = ["Option 1", "Option 2", "Option 3", "Option 4"]
 
     def on_options(self):
-        radio_group = self.ids.radio_group
-        radio_group.clear_widgets()
+        layout = self.ids.radio_group
+        layout.clear_widgets()
 
         for i, option in enumerate(self.options):
-            radio_group.add_widget(Label(text=option, color=(0, 0, 0, 1)))
+            # Container for each label and checkbox pair
+            container = GridLayout(cols=2, size_hint_y=None, height=50)
 
-            checkbox = CheckBox(group="answer_2", value=option, active=True if i == 0 else False, allow_no_selection=False)
-            radio_group.add_widget(checkbox)
+            # Multiline Label
+            label = Label(
+                text=option,
+                text_size=(200, None),  # Adjust text wrapping width
+                halign="left",
+                valign="middle",
+                size_hint=(None, None),
+                size=(200, 50),
+                color=(0,0,0,1)
+            )
+            label.bind(size=lambda lbl, _: lbl.text_size)  # Dynamically adjust text_size
+            container.add_widget(label)
+
+            # CheckBox
+            checkbox = CheckBox(
+                group="answer_2",
+                active=True if i == 0 else False
+            )
+            checkbox.value = option
+            container.add_widget(checkbox)
+
+            # Add container to layout
+            layout.add_widget(container)
+
+        # Ensure dynamic height of the GridLayout
+        layout.height = layout.minimum_height
 
 
 class Text1(Screen):
@@ -90,8 +141,9 @@ class Manager(Screen):
         match type_info:
             case "radio":
                 for child in page.ids.radio_group.children:
-                    if hasattr(child, 'active') and child.active:
-                        return child.value
+                    for child_2 in child.children:
+                        if isinstance(child_2, CheckBox) and child_2.active:
+                            return getattr(child_2, 'value', None)
             case "text":
                 return page.ids.text_input.text
             case "yesno":
@@ -193,12 +245,14 @@ class KnowledgeApp(App):
             self._switch_page(screen_manager, page)
             return
 
-        # Switch screens
+        # Switch screens, first try updating 
         try:
             page.options = self._info["radio_texts"]
+            page.rows = self._info["radio_ammount"]
             page.on_options()
-        except Exception:
+        except KeyError:
             pass
+
         screen_manager.transition = SlideTransition(direction="left", duration=0.3)
         self._switch_page(screen_manager, page)
 
@@ -253,7 +307,8 @@ class KnowledgeApp(App):
                     page.error_text = "Invalid input"
                     return False
             case "radio":
-                pass
+                if data not in page.options:
+                    return False
             case "yesno":
                 if page.yes_pressed is None:
                     page.error_text = "Please press a button"
