@@ -14,10 +14,12 @@
     # Question text
     Label:
         text: app.title
-        color: 0,0,0,1
+        color: 0, 0, 0, 1
         pos_hint: {'center_x': 0.5, 'center_y': 0.75}
         font_size: 25
-
+        text_size: self.size  # Set text size to match the Label's size
+        halign: 'center'      # Horizontal alignment
+        valign: 'middle'      # Vertical alignment
 
 ###############
 # SCREEN MANAGER
