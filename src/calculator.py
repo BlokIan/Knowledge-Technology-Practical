@@ -114,25 +114,23 @@ class User:
     def _less_mortgage_student_debt(self):
         if self._student_debt is None or type(self._student_debt) == str:
             return 0
-        factor = 0
         match self._bracket:
             case "0,000-1,500%" | "1,500-2,000%":
-                factor = 1.05
+                return 1.05
             case "2,001-2,500%":
-                factor = 1.1
+                return 1.1
             case "2,501-3,000%":
-                factor = 1.15
+                return 1.15
             case "3,001-3,500%" | "3,501-4,000%":
-                factor = 1.2
+                return 1.2
             case "4,001-4,500%":
-                factor = 1.25
+                return 1.25
             case "4,501-5,000%" | "5,001-5,500%":
-                factor = 1.3
+                return 1.3
             case "5,501-6,000%":
-                factor = 1.35
+                return 1.35
             case "6,001-6,500%" | "6,501-100,000%":
-                factor = 1.4
-        return (factor * self._student_debt / (self._month_interest / (1 - (1 + self._month_interest) ** -(self._period))))
+                return 1.4
     
     def _year_deductible_interest(self, annuity_gross_monthly_costs):
         annuity_mortgage = self._max_mortgage
@@ -177,7 +175,7 @@ class User:
         return linear_mortgage_repayment + linear_interest_payment / 12
 
     def _new_max_mortgage(self):
-        return (self._annuity_costs() - self._costs) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
+        return (self._annuity_costs() - self._costs - self._student_debt * self._less_mortgage_student_debt()) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
     def find_max_mortgage(self):
         self._max_mortgage = int(round((self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor(),0))
@@ -222,8 +220,10 @@ def main():
     energy_label = "A+++"
     woz = 133727
     monthly_costs = 0
-    user = User(income, interest, period, energy_label, woz, monthly_costs)
+    student_debt = 100
+    user = User(income, interest, period, energy_label, woz, monthly_costs, student_debt)
     print(user._find_max_expense(), user._find_annuity_factor())
+    print(user._less_mortgage_student_debt())
     print(user.find_max_mortgage())
     
     print(user.monthly_costs())

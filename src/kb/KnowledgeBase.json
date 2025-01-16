@@ -45,12 +45,12 @@
                 },
                 {
                     "name": "market value",
-                    "question": "What is the market value of the house?",
+                    "question": "What is the asked price for the house?",
                     "answer_type": "integer"
                 },
                 {
                     "name": "bid",
-                    "question": "What is the offer that you would like to make for the house?",
+                    "question": "What is the offer that you would like to make on the house?",
                     "answer_type": "integer"
                 },
                 {
@@ -459,7 +459,7 @@
         },
         {
             "description": "end advice buy possibility",
-            "advice": "The maximum mortgage combined with your down payment of €{} is not enough to purchase the house, considering your maximum bid (€{}).\nThe mortgage combined with your own money would allow you to bid {}.\n\nConsult your mortgage advisor to discuss further possibilities.",
+            "advice": "The maximum mortgage combined with your down payment of €{} is not enough to purchase the house, considering your maximum bid (€{}).\nThe mortgage combined with your own money would allow you to bid {}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.\n\nConsult your mortgage advisor to discuss further possibilities.",
             "fill in": ["own money", "bid", "max bid"]
         },
         {
@@ -486,13 +486,13 @@
         },
         {
             "description": "advice linear mortgage",
-            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.",
             "fill in": ["own money", "bid", "linear gross monthly fees", "linear net monthly fees"], 
             "next_step": "renovations"
         },
         {
             "description": "advice annuity mortgage",
-            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.",
             "fill in": ["own money", "bid", "annuity gross monthly fees", "annuity net monthly fees"],
             "next_step": "renovations"
         },
