@@ -16,7 +16,7 @@
         text: app.title
         color: 0, 0, 0, 1
         pos_hint: {'center_x': 0.5, 'center_y': 0.75}
-        font_size: 25
+        font_size: dp(25)
         text_size: self.size  # Set text size to match the Label's size
         halign: 'center'      # Horizontal alignment
         valign: 'middle'      # Vertical alignment
@@ -154,7 +154,7 @@
             Label:
                 text: root.error_text
                 color: 1,0,0,1
-                font_size: 13
+                font_size: dp(13)
                 halign: 'left'
                 valign: 'bottom'
                 text_size: self.size
@@ -202,7 +202,7 @@
             Label:
                 text: root.error_text
                 color: 1,0,0,1
-                font_size: 13
+                font_size: dp(13)
                 halign: 'left'
                 valign: 'bottom'
                 text_size: self.size
@@ -250,7 +250,7 @@
             Label:
                 text: root.error_text
                 color: 1,0,0,1
-                font_size: 13
+                font_size: dp(13)
                 halign: 'center'
                 valign: 'bottom'
                 text_size: self.size
@@ -298,7 +298,7 @@
             Label:
                 text: root.error_text
                 color: 1,0,0,1
-                font_size: 13
+                font_size: dp(13)
                 halign: 'center'
                 valign: 'bottom'
                 text_size: self.size
@@ -357,4 +357,4 @@
                     size_hint_y: None  # Enable dynamic height
                     height: self.texture_size[1] + 20  # Match height to text
                     color: 0, 0, 0, 1
-                    font_size: '18sp'
+                    font_size: dp(18)
