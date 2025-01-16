@@ -34,7 +34,7 @@ class RadioButtons1(Screen):
 
         for i, option in enumerate(self.options):
             # Container for each label and checkbox pair
-            container = GridLayout(cols=2, size_hint_y=None, height=50)
+            container = GridLayout(cols=2, size_hint_y=None, height=dp(50))
    
             # Multiline Label
             label = Label(
@@ -75,7 +75,7 @@ class RadioButtons2(Screen):
 
         for i, option in enumerate(self.options):
             # Container for each label and checkbox pair
-            container = GridLayout(cols=2, size_hint_y=None, height=50)
+            container = GridLayout(cols=2, size_hint_y=None, height=dp(50))
 
             # Multiline Label
             label = Label(
