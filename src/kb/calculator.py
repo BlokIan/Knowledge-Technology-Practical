@@ -5,12 +5,13 @@ WOONQUOTE_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "woonquote.txt")
 ANNUITY_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "annuity.txt")
 
 class User:
-    def __init__(self, income, interest, period, energy_label, market_value, monthly_costs, student_debt):
+    def __init__(self, income, interest, period, energy_label, market_value, woz, monthly_costs, student_debt):
         self._income = round(income, -3)
         self._interest = interest
         self._period = period
         self._energy_label = energy_label
         self._market_value = market_value
+        self._woz = woz
         self._month_interest = interest / 100 / 12
         self._costs = monthly_costs
         self._student_debt = student_debt

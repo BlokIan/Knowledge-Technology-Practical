@@ -41,7 +41,7 @@ class KnowledgeBase:
         """Return the conclusion containing all advice."""
         conclusion = ""
         for advice in self._facts["advice"]:
-            conclusion = conclusion + advice + "\n"
+            conclusion = conclusion + advice + "\n\n"
         return conclusion.rstrip()
 
     def _find_step(self):
@@ -109,7 +109,7 @@ class KnowledgeBase:
     def _update_mortgage_facts(self):
         """Calculates the maximum mortgage."""
         costs_per_month = sum(self._facts[item] for item in ("family loan", "other loan", "mobile phone on credit", "private lease car") if type(self._facts[item]) == int)
-        user = User(self._facts["income"], round(self._facts["interest"],1), 360, self._facts["energy label"], self._facts["property valuation"], costs_per_month, self._facts["student debt"])
+        user = User(self._facts["income"], round(self._facts["interest"],1), 360, self._facts["energy label"], self._facts["market value"], self._facts["property valuation"], costs_per_month, self._facts["student debt"])
 
         maximum_mortgage = user.find_max_mortgage()
         self._update_facts("maximum mortgage", maximum_mortgage)
@@ -132,7 +132,7 @@ class KnowledgeBase:
             if "bank" in self._current_step:
                 self._update_facts("interest", self._interest_bank())
                 if (self._facts["maximum mortgage"] is None
-                    and all(self._facts[key] is not None for key in ["income", "interest", "energy label", "property valuation"])):
+                    and all(self._facts[key] is not None for key in ["income", "interest", "energy label", "market value", "property valuation"])):
                     self._update_mortgage_facts()
 
             self._update_facts("advice", self._get_advice())
@@ -163,7 +163,7 @@ class KnowledgeBase:
         self._update_facts(self._kb_requirement["name"], answer)      
 
         if self._facts["max bid"] is None and self._facts["maximum mortgage"] is not None and self._facts["own money"] is not None:
-            self._update_facts(self._kb_requirement["max bid"], answer)
+            self._update_facts("max bid", int(self._facts["maximum mortgage"]) + int(self._facts["own money"]))
         
         self._rule_deduction()
 

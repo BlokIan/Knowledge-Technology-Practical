@@ -54,6 +54,11 @@
                     "answer_type": "integer"
                 },
                 {
+                    "name": "property valuation",
+                    "question": "What is the property valuation of the house? (woz-waarde in Dutch)",
+                    "answer_type": "integer"
+                },
+                {
                     "name": "energy label",
                     "question": "What is the energy label of the house?",
                     "answer_type": "A++++ with energy performance guarantee/A++++/A+++/A++, A+/A, B/C, D/E, F, G"
@@ -238,7 +243,7 @@
         },
         {
             "description": "end advice check failed",
-            "advice": "You cannot use this mortgage advice system, as you do not fulfill all the criteria. These criteria are being married couple buying their first house with a fixed income, who are using a NHG mortgage. Please check with your mortgage advisor for possibilities of a mortgage."
+            "advice": "You cannot use this mortgage advice system, as you do not fulfill all the criteria. These criteria are being married couple buying their first house with a fixed income, who are using a NHG mortgage.\n\nPlease check with your mortgage advisor for possibilities of a mortgage."
         },
         {
             "description": "bkr registration",
@@ -254,7 +259,7 @@
         },
         {
             "description": "end advice bkr",
-            "advice": "As you have a negative bkr registration, you cannot apply for a mortgage. Consult a mortgage advisor to get advice on your possibilities."
+            "advice": "As you have a negative bkr registration, you cannot apply for a mortgage.\n\nConsult a mortgage advisor to get advice on your possibilities."
         }, 
         {
             "description": "amount mortgage",
@@ -280,7 +285,7 @@
         },
         {
             "description": "end advice NHG mortgage",
-            "advice": "As the market value of the house is too high, you apply for a NHG mortgage. Consult your mortgage advisor for possibilities."
+            "advice": "As the market value of the house is too high, you cannot apply for a NHG mortgage.\n\nConsult your mortgage advisor for possibilities."
         },
         {
             "description": "monthly fees",
@@ -454,7 +459,7 @@
         },
         {
             "description": "end advice buy possibility",
-            "advice": "The maximum mortgage combined with your down payment of €{} is not enough to purchase the house, considering your maximum bid (€{}).\nThe mortgage combined with your own money would allow you to bid {max bid}.\nConsult your mortgage advisor to discuss further possibilities.",
+            "advice": "The maximum mortgage combined with your down payment of €{} is not enough to purchase the house, considering your maximum bid (€{}).\nThe mortgage combined with your own money would allow you to bid {}.\n\nConsult your mortgage advisor to discuss further possibilities.",
             "fill in": ["own money", "bid", "max bid"]
         },
         {
@@ -481,13 +486,13 @@
         },
         {
             "description": "advice linear mortgage",
-            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n -gross monthly costs €{}\n-net monthly costs of €{}.",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.",
             "fill in": ["own money", "bid", "linear gross monthly fees", "linear net monthly fees"], 
             "next_step": "renovations"
         },
         {
             "description": "advice annuity mortgage",
-            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n -gross monthly costs €{}\n-net monthly costs of €{}.",
+            "advice": "Considering your down payment (€{}) and the maximum mortgage, it is possible to purchase the house for €{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n-gross monthly costs €{}\n-net monthly costs of €{}.",
             "fill in": ["own money", "bid", "annuity gross monthly fees", "annuity net monthly fees"],
             "next_step": "renovations"
         },
@@ -523,6 +528,7 @@
         "income": null,
         "market value": null,
         "bid" : null,
+        "property valuation": null,
         "energy label": null,
         "own money": null,
 
