@@ -5,12 +5,12 @@ WOONQUOTE_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "woonquote.txt")
 ANNUITY_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "annuity.txt")
 
 class User:
-    def __init__(self, income, interest, period, energy_label, woz, monthly_costs, student_debt):
+    def __init__(self, income, interest, period, energy_label, market_value, monthly_costs, student_debt):
         self._income = round(income, -3)
         self._interest = interest
         self._period = period
         self._energy_label = energy_label
-        self._woz = woz
+        self._market_value = market_value
         self._month_interest = interest / 100 / 12
         self._costs = monthly_costs
         self._student_debt = student_debt
@@ -185,8 +185,8 @@ class User:
         self._max_mortgage = int(round((self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor(),0))
         self._max_mortgage += self._extra_mortgage_energy_label() - self._less_mortgage_student_debt()
         self._max_mortgage = self._new_max_mortgage()
-        if self._max_mortgage > self._woz:
-            self._max_mortgage = self._woz
+        if self._max_mortgage > self._market_value:
+            self._max_mortgage = self._market_value
         
         return self._max_mortgage
     

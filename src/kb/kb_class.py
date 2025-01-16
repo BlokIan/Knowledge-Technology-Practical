@@ -57,10 +57,11 @@ class KnowledgeBase:
         fact_value = self._facts[name]
     
         if "minus" in req:
-            if self._facts[req["minus"]] is not None:
-                fact_value = self._facts[name] - self._facts[req["minus"]]
-            else:
-                return None
+            for min in req["minus"]:
+                if self._facts[min] is not None:
+                    fact_value = self._facts[name] - self._facts[req["minus"]]
+                else:
+                    return None
         
         match condition:
             case "==":
@@ -124,7 +125,7 @@ class KnowledgeBase:
         if self._current_question_index == 0:
             self._find_step()
 
-        if "bank" in self._current_step:
+        if "bank" | "buy possibility" in self._current_step:
             self._rule_deduction()
 
         while "advice" in self._current_step:
@@ -156,7 +157,11 @@ class KnowledgeBase:
     def answer(self, answer):
         """Answer of the user is updated to the facts"""
         answer = (int(answer) if self._kb_requirement["answer_type"] == "integer" else answer)
-        self._update_facts(self._kb_requirement["name"], answer)       
+        self._update_facts(self._kb_requirement["name"], answer)      
+
+        if self._facts["max bid"] is None and self._facts["maximum mortgage"] is not None and self._facts["own money"] is not None:
+            self._update_facts(self._kb_requirement["max bid"], answer)
+        
         self._rule_deduction()
 
 
