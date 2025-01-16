@@ -125,7 +125,7 @@ class KnowledgeBase:
         if self._current_question_index == 0:
             self._find_step()
 
-        if "bank" | "buy possibility" in self._current_step:
+        if "bank" in self._current_step:
             self._rule_deduction()
 
         while "advice" in self._current_step:
@@ -141,7 +141,10 @@ class KnowledgeBase:
                 return "advice", self._conclusion(), None
             else:
                 self._rule_deduction()
-                self._find_step()         
+                self._find_step()   
+
+        if "buy possibility" in self._current_step:
+            self._rule_deduction()      
         
         if self._current_question_index < len(self._kb_item["requirement questions"]):
             self._kb_requirement = self._kb_item["requirement questions"][self._current_question_index]
