@@ -25,7 +25,6 @@ class DataProvider():
         Logger.debug(f"Returned the following output to kb: {information["output"]}")
         self._kb.answer(information["output"])
 
-
     def get_next_window(self) -> dict:
         if not self._updated_data:
             return self._current_page

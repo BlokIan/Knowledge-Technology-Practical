@@ -62,11 +62,13 @@ class User:
         income = self._income
         if self._income < 28000:
             income = 28000
+        elif self._income > 125000:
+            income = 125000
         if income in self._expense_table.index:
             return self._expense_table.loc[income, self._bracket]
         else:
             return "Invalid income."
-        
+
     def _read_annuity_table(self):
         file_name = ANNUITY_FILEPATH
         df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
