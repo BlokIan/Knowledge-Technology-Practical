@@ -453,7 +453,7 @@
         },
         {
             "description": "advice amount mortgage",
-            "advice": "The maximum mortgage you can receive is: €{}.",
+            "advice": "The maximum mortgage you can receive is: \u20AC{}.",
             "fill in": "maximum mortgage",
             "next_step": "type mortgage"
         },
