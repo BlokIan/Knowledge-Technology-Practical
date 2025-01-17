@@ -120,6 +120,7 @@ class User:
                 return 0 
             
     def _factor_student_debt(self):
+        """Returns a factor for multiplying with student debt"""
         match self._bracket:
             case "0,000-1,500%" | "1,500-2,000%":
                 return 1.05
@@ -139,6 +140,7 @@ class User:
                 return 1.4
     
     def _year_deductible_interest(self, annuity_gross_monthly_costs):
+        """Gives the deducible interest (for annuity and linear mortgage), which is used for calculating the net monthly costs."""
         annuity_mortgage = self._max_mortgage
         linear_mortgage = self._max_mortgage
         annuity_year_deductible_interest = 0
@@ -155,6 +157,7 @@ class User:
         return annuity_year_deductible_interest, linear_year_deductible_interest
         
     def _notional_rental_value(self):
+        "Returns the notional rental value (Dutch: eigenwoningforfait)"
         if self._woz <= 12500:
             return 0
         elif self._woz <= 25000:
@@ -167,9 +170,11 @@ class User:
             return 0.0035 * self._woz  
     
     def _annuity_costs(self):
+        "Calculates the gross annuity monthly costs"
         return self._max_mortgage * (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
     def _linear_costs(self):
+        "Calculates the gross linear monthly costs"
         linear_mortgage_repayment = self._max_mortgage / self._period
         linear_interest_payment = 0
         linear_mortgage = self._max_mortgage
@@ -181,6 +186,7 @@ class User:
         return linear_mortgage_repayment + linear_interest_payment / 12
 
     def _new_max_mortgage(self, costs):
+        "Calculates the maximum mortgage given financial obligations (costs)"
         other_loan, mobile_phone, private_lease_car, student_debt = costs
         other_loan = other_loan * 0.02 if type(other_loan) == int else 0
         mobile_phone = mobile_phone if type(mobile_phone) == int else 0
@@ -190,6 +196,7 @@ class User:
         return (self._annuity_costs() - montly_costs) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
     def update_max_mortgage(self, costs):
+        "Updates the maximum mortgage with the given costs"
         if costs is not None:
             self._max_mortgage = self._new_max_mortgage(costs)
 
@@ -199,11 +206,13 @@ class User:
         return round(self._max_mortgage) if self._max_mortgage > 0 else 0
     
     def find_max_mortgage(self):
+        "Returns the maximum mortgage (excluding calculations with costs)"
         if self._max_mortgage > self._market_value:
             return round(self._market_value)
         return round(self._max_mortgage) if self._max_mortgage > 0 else 0
     
     def monthly_costs(self):
+        """Calculates the monthly costs (gross and net) based on type mortgage (annuity and linear)"""
         if self._max_mortgage is None:
             self.find_max_mortgage()
 
@@ -226,32 +235,5 @@ class User:
             annuity_net_monthly_costs = 0
         if linear_net_monthly_costs < 0:
             linear_net_monthly_costs = 0
-        
 
         return math.ceil(annuity_gross_monthly_costs), math.ceil(annuity_net_monthly_costs), math.ceil(linear_gross_monthly_costs), math.ceil(linear_net_monthly_costs)
-    
-def main1():
-    income = 100000
-    interest = 1.6
-    period = 360
-    woz = 200000
-    user = User(income, interest, period, woz)
-    print(user._find_max_expense())
-    print(user._find_annuity_factor())
-    print(user.find_max_mortgage())
-
-def main():
-    income = 30000
-    interest = 3.78
-    period = 360
-    energy_label = "A+++"
-    woz = 133727
-    market_value = 200000
-    user = User(income, interest, period, energy_label, market_value, woz)
-    print(user._find_max_expense(), user._find_annuity_factor())
-    print(user.find_max_mortgage(None))
-    
-    print(user.monthly_costs())
-
-if __name__ == "__main__":
-    main()

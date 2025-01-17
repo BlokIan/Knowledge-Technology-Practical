@@ -20,7 +20,7 @@ class KnowledgeBase:
             return json.load(file)
 
     def _update_facts(self, fact, value):
-        """Update the facts dictionary."""
+        """Update the facts dictionary"""
         if fact == "advice":
             self._facts[fact].append(value)
         else:
@@ -46,14 +46,14 @@ class KnowledgeBase:
         return conclusion.rstrip()
 
     def _find_step(self):
-        """Find a knowledge base item by description."""
+        """Find a knowledge base item by description"""
         for kb_item in self._kb:
             if kb_item["description"] == self._current_step:
                 self._kb_item = kb_item
                 break
 
     def _condition(self, req):
-        """Check a condition on a fact."""
+        """Check a condition on a fact"""
         name, condition, value = req["name"], req["condition"], req["value"]
         fact_value = self._facts[name]
     
@@ -73,7 +73,7 @@ class KnowledgeBase:
         return False
 
     def _rule_deduction(self):
-        """Apply rules to deduce the next step."""
+        """Apply rules to deduce the next step"""
         for rule in self._rules:
             if rule["description"] == self._current_step:
                 if "advice" in self._current_step:
@@ -98,14 +98,14 @@ class KnowledgeBase:
                 return
     
     def _interest_bank(self):
-        """Get the interest depending on the bank."""
+        """Get the interest depending on the bank"""
         if "ING" in self._current_step:
             return 3.40
         elif "Vista" in self._current_step:
             return 3.34
 
     def _update_mortgage_facts(self):
-        """Calculates the maximum mortgage."""
+        """Calculates the maximum mortgage"""
         annuity_gross, annuity_net, linear_gross, linear_net = self._user.monthly_costs()
         self._update_facts("annuity gross monthly fees", annuity_gross)
         self._update_facts("linear gross monthly fees", linear_gross)
@@ -118,7 +118,7 @@ class KnowledgeBase:
         
 
     def question_or_advice(self):
-        """Infers which question to be asked or advice to be given to the user."""
+        """Infers which question to be asked or advice to be given to the user"""
         if self._current_question_index == 0:
             self._find_step()
         
@@ -167,18 +167,3 @@ class KnowledgeBase:
         answer = (int(answer) if self._kb_requirement["answer_type"] == "integer" else answer)
         self._update_facts(self._kb_requirement["name"], answer)
         self._rule_deduction()
-
-
-def main():
-    kb = KnowledgeBase("KnowledgeBase.json")
-    q_or_a, item, answer_type = kb.question_or_advice()
-    while q_or_a != "advice":
-        print(item)
-        answer = input()
-        kb.answer(answer)
-        q_or_a, item, answer_type = kb.question_or_advice()
-    
-    print(item)
-
-if __name__ == "__main__":
-    main()
