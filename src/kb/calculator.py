@@ -115,8 +115,6 @@ class User:
                 return 0 
             
     def _factor_student_debt(self):
-        if self._student_debt is None or type(self._student_debt) == str:
-            return 0
         match self._bracket:
             case "0,000-1,500%" | "1,500-2,000%":
                 return 1.05
@@ -182,7 +180,7 @@ class User:
         other_loan = other_loan * 0.02 if type(other_loan) == int else 0
         mobile_phone = mobile_phone if type(mobile_phone) == int else 0
         private_lease_car = private_lease_car * 0.02 if type(private_lease_car) == int else 0
-        student_debt = student_debt * self._factor_student_debt() if type(student_debt) == int else 0
+        student_debt = student_debt * self._factor_student_debt(student_debt) if type(student_debt) == int else 0
         montly_costs = other_loan + mobile_phone + private_lease_car + student_debt
         return (self._annuity_costs() - montly_costs) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
