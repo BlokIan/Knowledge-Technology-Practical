@@ -75,7 +75,7 @@
             "requirement questions": [
                 {
                     "name": "financial obligations",
-                    "question": "Do you have monthly financial obligations (e.g. private lease car, student loan)?",
+                    "question": "Do you have financial obligations (e.g. private lease car, student loan)?",
                     "answer_type": "yes/no"
                 }
             ]

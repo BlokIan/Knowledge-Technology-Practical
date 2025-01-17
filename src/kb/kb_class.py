@@ -9,7 +9,7 @@ class KnowledgeBase:
         self._rules = self._data["rules"]
         self._facts = self._data["facts"]
         self._kb_requirement = None
-        self._current_step = "check"
+        self._current_step = "amount mortgage"
         self._current_question_index = 0
         self._kb_item = None
         self._user = None
@@ -127,7 +127,7 @@ class KnowledgeBase:
                 self._update_facts("interest", self._interest_bank())
                 self._update_facts("maximum mortgage", self._find_max_mortgage(None))
 
-                if self._facts["financial obligations"] == "no":
+                if self._facts["financial obligations"] == "no" or self._facts["family loan"] == "no":
                     self._update_facts("max bid", int(self._facts["maximum mortgage"]) + int(self._facts["own money"]))
                 elif type(self._facts["family loan"]) == int:
                     self._update_facts("max bid", int(self._facts["maximum mortgage"]) + int(self._facts["own money"] + int(self._facts["family loan"])))
