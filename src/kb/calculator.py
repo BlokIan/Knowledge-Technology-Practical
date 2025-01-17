@@ -191,12 +191,12 @@ class User:
         if self._max_mortgage > self._market_value:
             self._max_mortgage = self._market_value
 
-        return round(self._max_mortgage)
+        return round(self._max_mortgage) if self._max_mortgage > 0 else 0
     
     def find_max_mortgage(self):
         if self._max_mortgage > self._market_value:
             return round(self._market_value)
-        return round(self._max_mortgage)
+        return round(self._max_mortgage) if self._max_mortgage > 0 else 0
     
     def monthly_costs(self):
         if self._max_mortgage is None:
