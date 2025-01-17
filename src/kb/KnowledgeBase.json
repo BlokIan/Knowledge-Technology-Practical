@@ -455,7 +455,20 @@
             "description": "advice amount mortgage",
             "advice": "The maximum mortgage you can receive is: \u20AC{}.",
             "fill in": "maximum mortgage",
-            "next_step": "type mortgage"
+            "next_step": "bid possibility (2)"
+        },
+        {
+            "description": "bid possibility (2)",
+            "requirements": [
+                {
+                    "name": "bid",
+                    "minus": "max bid",
+                    "condition": "<=",
+                    "value": 0
+                }
+            ],
+            "next_step": "type mortgage",
+            "else": "end advice bid possibility"
         },
         {
             "description": "type mortgage",
