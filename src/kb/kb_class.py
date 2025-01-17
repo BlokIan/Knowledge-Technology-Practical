@@ -9,7 +9,7 @@ class KnowledgeBase:
         self._rules = self._data["rules"]
         self._facts = self._data["facts"]
         self._kb_requirement = None
-        self._current_step = "amount mortgage"
+        self._current_step = "check"
         self._current_question_index = 0
         self._kb_item = None
         self._user = None
