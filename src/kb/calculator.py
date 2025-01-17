@@ -213,6 +213,16 @@ class User:
         annuity_net_monthly_costs = annuity_gross_monthly_costs - annuity_mortgage_interest_deduction / 12
         linear_net_monthly_costs = linear_gross_monthly_costs - linear_mortgage_interest_deduction / 12
 
+        if annuity_gross_monthly_costs < 0:
+            annuity_gross_monthly_costs = 0
+        if linear_gross_monthly_costs < 0:
+            linear_gross_monthly_costs = 0
+        if annuity_net_monthly_costs < 0:
+            annuity_net_monthly_costs = 0
+        if linear_net_monthly_costs < 0:
+            linear_net_monthly_costs = 0
+        
+
         return math.ceil(annuity_gross_monthly_costs), math.ceil(annuity_net_monthly_costs), math.ceil(linear_gross_monthly_costs), math.ceil(linear_net_monthly_costs)
     
 def main1():
