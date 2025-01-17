@@ -184,16 +184,18 @@ class User:
         montly_costs = sum(other_loan, mobile_phone, private_lease_car, student_debt)
         return (self._annuity_costs() - montly_costs) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
-    def find_max_mortgage(self, costs):
-        if costs is None:
-            if self._max_mortgage > self._market_value:
-                return round(self._market_value)
-            return round(self._max_mortgage)
-        
-        self._max_mortgage = self._new_max_mortgage(costs)
+    def update_max_mortgage(self, costs):
+        if costs is not None:
+            self._max_mortgage = self._new_max_mortgage(costs)
 
         if self._max_mortgage > self._market_value:
             self._max_mortgage = self._market_value
+
+        return round(self._max_mortgage)
+    
+    def find_max_mortgage(self):
+        if self._max_mortgage > self._market_value:
+            return round(self._market_value)
         return round(self._max_mortgage)
     
     def monthly_costs(self):
@@ -224,15 +226,15 @@ def main1():
     print(user.find_max_mortgage())
 
 def main():
-    income = 50000
+    income = 30000
     interest = 3.78
     period = 360
     energy_label = "A+++"
     woz = 133727
-    monthly_costs = 0
-    user = User(income, interest, period, energy_label, woz, monthly_costs)
+    market_value = 200000
+    user = User(income, interest, period, energy_label, market_value, woz)
     print(user._find_max_expense(), user._find_annuity_factor())
-    print(user.find_max_mortgage())
+    print(user.find_max_mortgage(None))
     
     print(user.monthly_costs())
 

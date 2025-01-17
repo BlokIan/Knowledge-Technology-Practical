@@ -112,9 +112,9 @@ class KnowledgeBase:
         self._update_facts("annuity net monthly fees", annuity_net)
         self._update_facts("linear net monthly fees", linear_net)
 
-    def _find_max_mortgage(self, costs):
+    def _find_max_mortgage(self):
         self._user = User(self._facts["income"], round(self._facts["interest"],1), 360, self._facts["energy label"], self._facts["market value"], self._facts["property valuation"])
-        return self._user.find_max_mortgage(costs)
+        return self._user.find_max_mortgage()
         
 
     def question_or_advice(self):
@@ -125,7 +125,7 @@ class KnowledgeBase:
         while "advice" in self._current_step or "bid possibility" in self._current_step or "financial obligations (2)" in self._current_step:
             if "bank" in self._current_step:
                 self._update_facts("interest", self._interest_bank())
-                self._update_facts("maximum mortgage", self._find_max_mortgage(None))
+                self._update_facts("maximum mortgage", self._find_max_mortgage())
 
                 if self._facts["financial obligations"] == "no" or self._facts["family loan"] == "no":
                     self._update_facts("max bid", int(self._facts["maximum mortgage"]) + int(self._facts["own money"]))
@@ -136,7 +136,9 @@ class KnowledgeBase:
             if "amount mortgage" in self._current_step:
                 if self._facts["financial obligations"] == "yes":
                     costs = [self._facts["other loan"], self._facts["mobile phone on credit"], self._facts["private lease car"], self._facts["student debt"]]
-                    self._update_facts("maximum mortgage", self._find_max_mortgage(costs))
+                    self._update_facts("maximum mortgage", self._user.update_max_mortgage(costs))
+                else:
+                    self._update_facts("maximum mortgage", self._user.update_max_mortgage(None))
 
                 self._update_mortgage_facts()
 
