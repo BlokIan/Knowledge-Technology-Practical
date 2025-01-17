@@ -20,6 +20,7 @@ class User:
         self._max_mortgage = int(round((self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor(),0)) + self._extra_mortgage_energy_label()
 
     def _read_expense_table(self):
+        """Preprocesses the 'woonquote' table such that it can be searched"""
         file_name = WOONQUOTE_FILEPATH
         df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
 
@@ -46,6 +47,7 @@ class User:
         return df
 
     def _find_interest_bracket(self, rate, brackets):
+        """Determines which column (interest bracket) of the 'woonquote' table should be used based on the interest"""
         for bracket in brackets:
             bounds = bracket.replace("%", "").split("-")
             lower_bound = float(bounds[0].replace(",", "."))
@@ -56,6 +58,7 @@ class User:
         return None
     
     def _find_max_expense(self):
+        """Looks up the woonquote value, given an income and interest"""
         self._bracket = self._find_interest_bracket(self._interest, self._expense_table.columns)
         if self._bracket is None:
             return "Invalid interest rate."
@@ -70,6 +73,7 @@ class User:
             return "Invalid income."
 
     def _read_annuity_table(self):
+        """Preprocesses the annuity table"""
         file_name = ANNUITY_FILEPATH
         df = pd.read_csv(file_name, delimiter="\t", encoding="utf-8")
 
@@ -91,6 +95,7 @@ class User:
         return df 
     
     def _find_annuity_factor(self):
+        """Finds the annuity factor based on the interest and period"""
         if math.ceil(self._interest*10)/10 in self._annuity_table.index:
             return self._annuity_table.loc[math.ceil(self._interest*10)/10, self._period]
         else:
