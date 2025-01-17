@@ -71,10 +71,10 @@
             ]
         },
         {
-            "description": "monthly fees",
+            "description": "financial obligations",
             "requirement questions": [
                 {
-                    "name": "monthly fees",
+                    "name": "financial obligations",
                     "question": "Do you have monthly financial obligations (e.g. private lease car, student loan)?",
                     "answer_type": "yes/no"
                 }
@@ -275,7 +275,7 @@
                     "value": 435000
                 }
             ],
-            "next_step": "monthly fees",
+            "next_step": "financial obligations",
             "else": "end advice NHG mortgage"
         },
         {
@@ -283,10 +283,10 @@
             "advice": "As the market value of the house is too high, you cannot apply for a NHG mortgage.\n\nConsult your mortgage advisor for possibilities."
         },
         {
-            "description": "monthly fees",
+            "description": "financial obligations",
             "requirements": [
                 {
-                    "name": "monthly fees",
+                    "name": "financial obligations",
                     "condition": "==",
                     "value": "yes"
                 }
@@ -321,37 +321,43 @@
             "description": "advice bank ING",
             "advice": "As you have a family loan, we advise a loan from bank ING with interest: {}%.",
             "fill in": "interest",
-            "next_step": "advice amount mortgage"
+            "next_step": "bid possibility"
         },
         {
             "description": "advice bank Vista",
             "advice": "We advise a loan from bank Vista with interest: {}%.",
             "fill in": "interest",
-            "next_step": "advice amount mortgage"
+            "next_step": "bid possibility"
         },
         {
-            "description": "advice amount mortgage",
-            "advice": "The maximum mortgage you can receive is: €{}.",
-            "fill in": "maximum mortgage",
-            "next_step": "buy possibility"
-        },
-        {
-            "description": "buy possibility",
+            "description": "bid possibility",
             "requirements": [
                 {
                     "name": "bid",
-                    "minus": ["maximum mortgage", "own money", "family loan"],
+                    "minus": "max bid",
                     "condition": "<=",
                     "value": 0
                 }
             ],
-            "next_step": "other loan",
-            "else": "advice buy possibility"
+            "next_step": "financial obligations (2)",
+            "else": "end advice bid possibility"
         },
         {
-            "description": "end advice buy possibility",
-            "advice": "The maximum mortgage combined with your down payment of \u20AC{} is not enough to purchase the house, considering your maximum bid (\u20AC{}).\nThe mortgage combined with your own money would allow you to bid {}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.\n\nConsult your mortgage advisor to discuss further possibilities.",
+            "description": "end advice bid possibility",
+            "advice": "The maximum mortgage combined with your down payment of \u20AC{} (and family loan) is not enough to purchase the house, considering your prefered bid (\u20AC{}).\nThe mortgage combined with your own money (and family loan) would allow you to bid \u20AC{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, one-time NHG fee.\n\nConsult your mortgage advisor to discuss further possibilities.",
             "fill in": ["own money", "bid", "max bid"]
+        },
+        {
+            "description": "financial obligations (2)",
+            "requirements": [
+                {
+                    "name": "financial obligations",
+                    "condition": "==",
+                    "value": "yes"
+                }
+            ],
+            "next_step": "other loan",
+            "else": "advice amount mortgage"
         },
         {
             "description": "other loan",
@@ -432,10 +438,10 @@
                 }
             ],
             "next_step": "student debt (2)",
-            "else": "bank"
+            "else": "advice amount mortgage"
         },
         {
-            "description": "student debt",
+            "description": "student debt (2)",
             "requirements": [
                 {
                     "name": "student debt",
@@ -443,7 +449,13 @@
                     "value": 0
                 }
             ],
-            "next_step": "bank"
+            "next_step": "advice amount mortgage"
+        },
+        {
+            "description": "advice amount mortgage",
+            "advice": "The maximum mortgage you can receive is: €{}.",
+            "fill in": "maximum mortgage",
+            "next_step": "type mortgage"
         },
         {
             "description": "type mortgage",
@@ -464,13 +476,13 @@
         },
         {
             "description": "advice linear mortgage",
-            "advice": "Considering your down payment (\u20AC{}) and the maximum mortgage, it is possible to purchase the house for \u20AC{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n - gross monthly costs of \u20AC{}\n - net monthly costs of \u20AC{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, and one-time NHG fee.",
+            "advice": "Considering your down payment (\u20AC{}) and the maximum mortgage, it is possible to purchase the house for \u20AC{}.\nIt is advised to take a linear mortgage.\nAn indication of your monthly costs for the first year:\n - gross monthly costs \u20AC{}\n - net monthly costs \u20AC{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, and one-time NHG fee.",
             "fill in": ["own money", "bid", "linear gross monthly fees", "linear net monthly fees"], 
             "next_step": "renovations"
         },
         {
             "description": "advice annuity mortgage",
-            "advice": "Considering your down payment (\u20AC{}) and the maximum mortgage, it is possible to purchase the house for \u20AC{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n - gross monthly costs of \u20AC{}\n - net monthly costs of \u20AC{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, and one-time NHG fee.",
+            "advice": "Considering your down payment (\u20AC{}) and the maximum mortgage, it is possible to purchase the house for \u20AC{}.\nIt is advised to take an annuity mortgage.\nAn indication of your monthly costs for the first year:\n - gross monthly costs \u20AC{}\n - net monthly costs \u20AC{}.\n\nThese calculations are without considering additional costs, including: appraisal costs, notary fees, and one-time NHG fee.",
             "fill in": ["own money", "bid", "annuity gross monthly fees", "annuity net monthly fees"],
             "next_step": "renovations"
         },
@@ -488,7 +500,7 @@
         },
         {
             "description": "end advice renovations",
-            "advice": "As you would like to plan renovations or make the house more sustainable, it is advisable to discuss this with a mortgage advisor."
+            "advice": "As you would like to plan renovations and/or make the house more sustainable, it is advisable to discuss this with a mortgage advisor."
         },
         {
             "description": "end advice disclaimer",
@@ -510,8 +522,8 @@
         "energy label": null,
         "own money": null,
 
-        "monthly fees": null,
-        "family loan": "no",
+        "financial obligations": null,
+        "family loan": null,
         "other loan": null,
         "mobile phone on credit": null,
         "private lease car": null,

@@ -5,7 +5,7 @@ WOONQUOTE_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "woonquote.txt")
 ANNUITY_FILEPATH = os.path.join(os.getcwd(), "src", "kb", "annuity.txt")
 
 class User:
-    def __init__(self, income, interest, period, energy_label, market_value, woz, monthly_costs, student_debt):
+    def __init__(self, income, interest, period, energy_label, market_value, woz):
         self._income = round(income, -3)
         self._interest = interest
         self._period = period
@@ -13,13 +13,11 @@ class User:
         self._market_value = market_value
         self._woz = woz
         self._month_interest = interest / 100 / 12
-        self._costs = monthly_costs
-        self._student_debt = student_debt
         self._perc_interest_deduction = 0.3697 # 2025 value: 0.3748
         self._expense_table = self._read_expense_table()
         self._annuity_table = self._read_annuity_table()
         self._bracket= None
-        self._max_mortgage = None
+        self._max_mortgage = int(round((self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor(),0)) + self._extra_mortgage_energy_label()
 
     def _read_expense_table(self):
         file_name = WOONQUOTE_FILEPATH
@@ -177,17 +175,25 @@ class User:
 
         return linear_mortgage_repayment + linear_interest_payment / 12
 
-    def _new_max_mortgage(self):
-        student_debt = self._student_debt if type(self._student_debt) == int else 0
-        return (self._annuity_costs() - self._costs - student_debt * self._factor_student_debt()) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
+    def _new_max_mortgage(self, costs):
+        other_loan, mobile_phone, private_lease_car, student_debt = costs
+        other_loan = other_loan * 0.02 if type(other_loan) == int else 0
+        mobile_phone = mobile_phone if type(mobile_phone) == int else 0
+        private_lease_car = private_lease_car * 0.02 if type(private_lease_car) == int else 0
+        student_debt = student_debt * self._factor_student_debt() if type(student_debt) == int else 0
+        montly_costs = sum(other_loan, mobile_phone, private_lease_car, student_debt)
+        return (self._annuity_costs() - montly_costs) / (self._month_interest / (1 - (1 + self._month_interest) ** -self._period))
     
-    def find_max_mortgage(self):
-        self._max_mortgage = int(round((self._find_max_expense() / 100) * (self._income / 12) * self._find_annuity_factor(),0))
-        self._max_mortgage += self._extra_mortgage_energy_label()
-        self._max_mortgage = self._new_max_mortgage()
+    def find_max_mortgage(self, costs):
+        if costs is None:
+            if self._max_mortgage > self._market_value:
+                return round(self._market_value)
+            return round(self._max_mortgage)
+        
+        self._max_mortgage = self._new_max_mortgage(costs)
+
         if self._max_mortgage > self._market_value:
             self._max_mortgage = self._market_value
-        
         return round(self._max_mortgage)
     
     def monthly_costs(self):
